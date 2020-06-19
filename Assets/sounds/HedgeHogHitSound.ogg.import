@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/HedgeHogHitSound.ogg-7c138e8d596a3635290939595e6c8241.oggstr"
+
+[deps]
+
+source_file="res://Assets/sounds/HedgeHogHitSound.ogg"
+dest_files=[ "res://.import/HedgeHogHitSound.ogg-7c138e8d596a3635290939595e6c8241.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

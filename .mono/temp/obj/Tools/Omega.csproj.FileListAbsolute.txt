@@ -1,0 +1,6 @@
+C:\Users\Exjer\Documents\Omega\.mono\temp\bin\Tools\Omega.dll
+C:\Users\Exjer\Documents\Omega\.mono\temp\bin\Tools\Omega.pdb
+C:\Users\Exjer\Documents\Omega\.mono\temp\obj\Tools\Omega.csprojAssemblyReference.cache
+C:\Users\Exjer\Documents\Omega\.mono\temp\obj\Tools\Omega.csproj.CoreCompileInputs.cache
+C:\Users\Exjer\Documents\Omega\.mono\temp\obj\Tools\Omega.dll
+C:\Users\Exjer\Documents\Omega\.mono\temp\obj\Tools\Omega.pdb
