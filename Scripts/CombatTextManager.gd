@@ -6,10 +6,10 @@ export var travel = Vector2(0, -80)
 export var duration = 0.75
 export var spread = PI/2
 
-func show_value(value, pos, crit=false):
+func show_value(value, pos, crit=false, color=Color('ff7878')):
 	var fct = FCT.instance()
 	add_child(fct)
-	fct.show_value(value, pos, travel, duration, spread, crit)
+	fct.show_value(value, pos, travel, duration, spread, crit, color)
 	
 	
 # Called when the node enters the scene tree for the first time.

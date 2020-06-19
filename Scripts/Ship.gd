@@ -4,6 +4,7 @@ extends KinematicBody2D
 export (int) var speed = 300
 const DmgParticles = preload("res://Objects/ShipDmgParticles.tscn")
 const Eblast = preload("res://Objects/Energy_blast.tscn")
+onready var combatTextMngr = $"../Interface/CombatText"
 const MAX_SPEED = 5
 var velocity = Vector2()
 export var hp = 150
@@ -40,6 +41,8 @@ func get_input():
 	
 	
 func _process(_delta):
+	if hp == 150:
+		$HpRegenTimer.stop()
 	if (hp <= 0 and not is_dead):
 		is_dead = true
 		$Sprite.visible = false
@@ -51,6 +54,8 @@ func _process(_delta):
 	
 func take_damage(dmg: int, collision):
 	hp -= dmg
+	$HpRegenTimer.stop()
+	$HitTimer.start()
 	emit_signal("damage_taken")
 #	$Hit.play()
 	var p = DmgParticles.instance()
@@ -88,6 +93,8 @@ func _on_ShotTimer_timeout():
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == 'Death':
 		$DeathTimer.start()
+		$HitTimer.stop()
+		$HpRegenTimer.stop()
 		$ShipDeathSprite.visible = false
 		visible = false
 	pass # Replace with function body.
@@ -96,3 +103,15 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 func _on_DeathTimer_timeout():
 	queue_free()
 	get_tree().change_scene("res://Levels/TitleScreen.tscn")
+
+
+func _on_HitTimer_timeout():
+	$HpRegenTimer.start()
+	combatTextMngr.show_value("REGEN", position + Vector2(0, -50), null, Color('7893ff'))
+	pass # Replace with function body.
+
+
+func _on_HpRegenTimer_timeout():
+	var amount = 2
+	hp += amount
+	combatTextMngr.show_value(str("+", amount), position + Vector2(0, -50), null, Color('7893ff'))

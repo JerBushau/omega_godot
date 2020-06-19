@@ -6,7 +6,7 @@ const Eblast = preload("res://Objects/Energy_blast.tscn")
 const DmgParticles = preload("res://Objects/HedgeHogSpineParticle.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var player = $"../Ship"
-var hp = 600
+var hp = 700
 var move_speed = 25
 onready var path_follow = get_node('../Path2D/PathFollow2D')
 var velocity = Vector2()
@@ -65,6 +65,8 @@ func take_damage(dmg: int, crit, collision):
 	add_child(p)
 	
 	if not is_dead:
+		$Sprite.modulate = Color(1.2, 1.2, 1.2, 1)
+		$HitTimer.start()
 		combatTextMngr.show_value(str(dmg), position + Vector2(0, -75), crit)
 
 
@@ -175,3 +177,8 @@ func _on_Attack_timer_timeout():
 func _on_DeathTimer_timeout():
 	queue_free()
 	get_tree().change_scene("res://Levels/TitleScreen.tscn")
+
+
+func _on_HitTimer_timeout():
+	$Sprite.modulate = Color(1,1,1,1)
+	pass # Replace with function body.
