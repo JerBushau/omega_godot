@@ -7,6 +7,7 @@ var dmg = 3
 var collision_pos
 var collision_angle
 var collision_velocity_at_angle
+var is_crit = false
 
 func init(wep_dmg):
 	dmg += wep_dmg
@@ -30,7 +31,7 @@ func _integrate_forces(state):
 func _on_Bullet_body_entered(body):
 	if (body.has_method('take_damage')):
 		var collision_obj = { "vel": collision_velocity_at_angle, "pos": collision_pos, "angle": collision_angle }
-		body.take_damage(dmg, collision_obj)
+		body.take_damage(dmg, is_crit, collision_obj)
 		queue_free()
 
 

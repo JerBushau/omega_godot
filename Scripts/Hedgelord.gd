@@ -4,6 +4,7 @@ signal damage_taken
 
 const Eblast = preload("res://Objects/Energy_blast.tscn")
 const DmgParticles = preload("res://Objects/HedgeHogSpineParticle.tscn")
+onready var combatTextMngr = $"../Interface/CombatText"
 onready var player = $"../Ship"
 var hp = 600
 var move_speed = 25
@@ -53,7 +54,7 @@ func _physics_process(delta):
 		move_and_slide(velocity)
 
 
-func take_damage(dmg: int, collision):
+func take_damage(dmg: int, crit, collision):
 	hp -= dmg
 	emit_signal('damage_taken', hp)
 	var p = DmgParticles.instance()
@@ -62,6 +63,9 @@ func take_damage(dmg: int, collision):
 	p.position = collision.pos
 	p.set_as_toplevel(true)
 	add_child(p)
+	
+	if not is_dead:
+		combatTextMngr.show_value(str(dmg), position + Vector2(0, -75), crit)
 
 
 func attack(type: int):
