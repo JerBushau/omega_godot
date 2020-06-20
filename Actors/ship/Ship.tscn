@@ -220,8 +220,9 @@ action = "click"
 visibility_mode = 1
 
 [node name="Shield" type="KinematicBody2D" parent="."]
-modulate = Color( 1, 1, 1, 0.74834 )
-rotation = 0.331453
+visible = false
+modulate = Color( 1, 1, 1, 0.898417 )
+rotation = -0.250123
 collision_layer = 0
 collision_mask = 8
 script = ExtResource( 14 )
@@ -234,7 +235,7 @@ rotation = 1.5708
 texture = ExtResource( 13 )
 vframes = 3
 hframes = 3
-frame = 3
+frame = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
 position = Vector2( -9.53674e-07, 0 )
