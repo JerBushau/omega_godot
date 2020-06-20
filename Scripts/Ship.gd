@@ -28,10 +28,10 @@ func get_input():
 	if Input.is_action_pressed('left'):
 		input.x -= 1
 # no up and down movement in original game
-#	if Input.is_action_pressed('down'):
-#		input.y += 1
-#	if Input.is_action_pressed('up'):
-#		input.y -= 1
+	if Input.is_action_pressed('down'):
+		input.y += 1
+	if Input.is_action_pressed('up'):
+		input.y -= 1
 	if Input.is_action_just_pressed('click'):
 		$Weapon/ShotTimer.start()
 		self.emit_signal('fire', global_rotation)

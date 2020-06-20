@@ -191,29 +191,45 @@
 			font-size: small;
 			font-family: "Lucida Console", Monaco, monospace;
 		}
+		.main-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 70vh;
+		}
 	</style>
-$GODOT_HEAD_INCLUDE
+
 </head>
 <body>
-	<div id="container">
-		<canvas id="canvas" width="640" height="480">
-			HTML5 canvas appears to be unsupported in the current browser.<br />
-			Please try updating or use a different browser.
-		</canvas>
-		<div id="status">
-			<div id='status-progress' style='display: none;' oncontextmenu="event.preventDefault();"><div id ='status-progress-inner'></div></div>
-			<div id='status-indeterminate' style='display: none;' oncontextmenu="event.preventDefault();">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
+	<div class="main-container">
+		<div id="container">
+			<canvas id="canvas" width="640" height="480">
+				HTML5 canvas appears to be unsupported in the current browser.<br />
+				Please try updating or use a different browser.
+			</canvas>
+			<div id="status">
+				<div id='status-progress' style='display: none;' oncontextmenu="event.preventDefault();"><div id ='status-progress-inner'></div></div>
+				<div id='status-indeterminate' style='display: none;' oncontextmenu="event.preventDefault();">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<div id="status-notice" class="godot" style='display: none;'></div>
 			</div>
-			<div id="status-notice" class="godot" style='display: none;'></div>
 		</div>
+	</div>
+	<div id="output-panel" class="godot">
+		<div id="output-header">
+			Output:
+			<button id='output-clear' class='godot' type='button' autocomplete='off'>Clear</button>
+		</div>
+		<div id="output-container"><div id="output-scroll"></div></div>
 	</div>
 	<div id="output-panel" class="godot">
 		<div id="output-header">
@@ -232,7 +248,7 @@ $GODOT_HEAD_INCLUDE
 
 			const EXECUTABLE_NAME = '$GODOT_BASENAME';
 			const MAIN_PACK = '$GODOT_BASENAME.pck';
-			const DEBUG_ENABLED = $GODOT_DEBUG_ENABLED;
+			const DEBUG_ENABLED = false;
 			const INDETERMINATE_STATUS_STEP_MS = 100;
 
 			var container = document.getElementById('container');

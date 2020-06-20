@@ -28,7 +28,7 @@ var attk_points = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play("Idle")
-	pass
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -97,6 +97,7 @@ func straight_seeking_blast():
 	eb.set_as_toplevel(true)
 	add_child(eb)
 
+
 func half_circle_blast():
 	$Energy_blast_attk_timer.wait_time = 1
 	$Energy_blast_attk_timer.start()
@@ -108,6 +109,7 @@ func half_circle_blast():
 		eb.global_rotation = direction
 		eb.set_as_toplevel(true)
 		add_child(eb)
+
 
 func spiral_blast():
 	$Energy_blast_attk_timer.wait_time = 0.001
@@ -181,4 +183,3 @@ func _on_DeathTimer_timeout():
 
 func _on_HitTimer_timeout():
 	$Sprite.modulate = Color(1,1,1,1)
-	pass # Replace with function body.

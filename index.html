@@ -191,7 +191,6 @@
 			font-size: small;
 			font-family: "Lucida Console", Monaco, monospace;
 		}
-
 		.main-container {
 			display: flex;
 			flex-direction: column;
@@ -224,6 +223,13 @@
 				<div id="status-notice" class="godot" style='display: none;'></div>
 			</div>
 		</div>
+	</div>
+	<div id="output-panel" class="godot">
+		<div id="output-header">
+			Output:
+			<button id='output-clear' class='godot' type='button' autocomplete='off'>Clear</button>
+		</div>
+		<div id="output-container"><div id="output-scroll"></div></div>
 	</div>
 	<div id="output-panel" class="godot">
 		<div id="output-header">
