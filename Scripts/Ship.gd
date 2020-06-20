@@ -7,10 +7,11 @@ const Eblast = preload("res://Objects/Energy_blast.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 const MAX_SPEED = 5
 var velocity = Vector2()
-export var hp = 150
+export var max_hp = 150
 export var shield = 100
 export var friction = 0.001
 export var acceleration = 0.01
+var hp = max_hp
 var is_dead = false
 
 signal fire
@@ -41,7 +42,7 @@ func get_input():
 	
 	
 func _process(_delta):
-	if hp == 150:
+	if hp == max_hp:
 		$HpRegenTimer.stop()
 	if (hp <= 0 and not is_dead):
 		is_dead = true
