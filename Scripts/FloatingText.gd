@@ -3,7 +3,6 @@ extends Label
 func show_value(value, pos, travel=Vector2(0, -80), duration=0.25, spread=PI/2, crit=false, color=Color('ff7878')):
 	text = str(value)
 	rect_position = pos
-	print(rect_position)
 	set("custom_colors/font_color", color)
 	var movement = travel.rotated(rand_range(-spread/2, spread/2))
 	rect_pivot_offset = rect_size

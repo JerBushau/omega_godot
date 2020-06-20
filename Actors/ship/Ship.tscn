@@ -44,6 +44,7 @@ font_data = ExtResource( 5 )
 position = Vector2( 0, 8 )
 rotation = 1.5708
 script = ExtResource( 2 )
+hp = 100
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708

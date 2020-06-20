@@ -5,8 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 var motion = Vector2(0, 0)
-onready var ship = $"../../../Ship" 
-var targetPosition
+onready var ship = $"../../../Ship"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
