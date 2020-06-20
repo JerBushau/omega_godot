@@ -28,9 +28,12 @@ func _integrate_forces(state):
 		
 
 func _on_Energy_blast_body_entered(body):
+	var collision_obj = { "vel": collision_velocity_at_angle, "pos": collision_pos, "angle": collision_angle }
 	if (body.has_method('take_damage')):
-		var collision_obj = { "vel": collision_velocity_at_angle, "pos": collision_pos, "angle": collision_angle }
 		body.take_damage(dmg, collision_obj)
+		queue_free()
+	elif body.has_method('consume'):
+		body.consume(collision_obj)
 		queue_free()
 		
 

@@ -15,6 +15,8 @@ var hp = max_hp
 var is_dead = false
 
 signal fire
+signal activate_shield
+signal deactivate_shield
 signal damage_taken
 
 func get_input():
@@ -28,15 +30,20 @@ func get_input():
 	if Input.is_action_pressed('left'):
 		input.x -= 1
 # no up and down movement in original game
-	if Input.is_action_pressed('down'):
-		input.y += 1
-	if Input.is_action_pressed('up'):
-		input.y -= 1
+#	if Input.is_action_pressed('down'):
+#		input.y += 1
+#	if Input.is_action_pressed('up'):
+#		input.y -= 1
 	if Input.is_action_just_pressed('click'):
 		$Weapon/ShotTimer.start()
 		self.emit_signal('fire', global_rotation)
 	if Input.is_action_just_released("click"):
 		$Weapon/ShotTimer.stop()
+	if Input.is_action_just_pressed("shield"):
+		if not $Shield.is_active and not $Shield.on_cooldown:
+			emit_signal("activate_shield")
+		else: 
+			emit_signal("deactivate_shield")
 	
 	return input
 	
@@ -45,6 +52,7 @@ func _process(_delta):
 	if hp == max_hp:
 		$HpRegenTimer.stop()
 	if (hp <= 0 and not is_dead):
+		emit_signal("deactivate_shield")
 		is_dead = true
 		$Sprite.visible = false
 		$ShipDeathSprite.visible = true
@@ -53,12 +61,15 @@ func _process(_delta):
 		set_collision_layer(0)
 
 	
-func take_damage(dmg: int, collision):
+func take_damage(dmg: int, collision=null):
 	hp -= dmg
-	$HpRegenTimer.stop()
-	$HitTimer.start()
-	emit_signal("damage_taken")
 #	$Hit.play()
+	$HitTimer.start()
+	$HpRegenTimer.stop()
+	if not collision:
+		return
+	
+	emit_signal("damage_taken")
 	var p = DmgParticles.instance()
 	p.rotation = collision.angle
 	p.set_emitting(true)
@@ -113,6 +124,8 @@ func _on_HitTimer_timeout():
 
 
 func _on_HpRegenTimer_timeout():
+	if $Shield.is_active:
+		return
 	var amount = 2
 	hp += amount
 	combatTextMngr.show_value(str("+", amount), position + Vector2(0, -50), null, Color('7893ff'))

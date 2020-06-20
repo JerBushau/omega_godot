@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Assets/ship1.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Assets/wobble.png" type="Texture" id=10]
 [ext_resource path="res://Assets/touch_button_right.png" type="Texture" id=11]
 [ext_resource path="res://Assets/touch_button_left.png" type="Texture" id=12]
+[ext_resource path="res://Assets/ship_shield.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/Shield.gd" type="Script" id=14]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Death"
@@ -43,11 +45,66 @@ thickness = 10
 [sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 5 )
 
+[sub_resource type="CircleShape2D" id=6]
+radius = 48.6621
+
+[sub_resource type="Animation" id=8]
+resource_name = "Active"
+loop = true
+step = 0.05
+
+[sub_resource type="Animation" id=7]
+resource_name = "Wave"
+length = 0.7
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.54902 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "rotate"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 20.0, 0.0, -20.0 ]
+}
+
 [node name="Ship" type="KinematicBody2D"]
 position = Vector2( 0, 8 )
 rotation = 1.5708
 script = ExtResource( 2 )
-acceleration = 0.03
+acceleration = 0.02
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
@@ -161,9 +218,48 @@ scale = Vector2( 6, 6 )
 normal = ExtResource( 10 )
 action = "click"
 visibility_mode = 1
+
+[node name="Shield" type="KinematicBody2D" parent="."]
+modulate = Color( 1, 1, 1, 0.74834 )
+rotation = 0.331453
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 14 )
+
+[node name="ShieldTimer" type="Timer" parent="Shield"]
+wait_time = 0.5
+
+[node name="Sprite" type="Sprite" parent="Shield"]
+rotation = 1.5708
+texture = ExtResource( 13 )
+vframes = 3
+hframes = 3
+frame = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
+position = Vector2( -9.53674e-07, 0 )
+shape = SubResource( 6 )
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Shield"]
+autoplay = "Wave"
+anims/Active = SubResource( 8 )
+anims/Wave = SubResource( 7 )
+
+[node name="Tween" type="Tween" parent="Shield"]
+
+[node name="ShieldCooldownTimer" type="Timer" parent="Shield"]
+wait_time = 0.001
+one_shot = true
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Shield"]
+autoplay = "rotate"
+anims/rotate = SubResource( 9 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="ShipCamera/Reset_cam_timer" to="ShipCamera" method="_on_Reset_cam_timer_timeout"]
 [connection signal="timeout" from="Weapon/ShotTimer" to="." method="_on_ShotTimer_timeout"]
 [connection signal="timeout" from="HpRegenTimer" to="." method="_on_HpRegenTimer_timeout"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+[connection signal="timeout" from="Shield/ShieldTimer" to="Shield" method="_on_ShieldTimer_timeout"]
+[connection signal="timeout" from="Shield/ShieldCooldownTimer" to="Shield" method="_on_ShieldCooldownTimer_timeout"]
