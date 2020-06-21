@@ -1,10 +1,11 @@
 class_name Ship
 extends KinematicBody2D
 
-export (int) var speed = 300
-const DmgParticles = preload("res://Objects/ShipDmgParticles.tscn")
-const Eblast = preload("res://Objects/Energy_blast.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
+onready var particle_manager = $"../Interface/Particles"
+
+export (int) var speed = 300
+const Eblast = preload("res://Objects/Energy_blast.tscn")
 const MAX_SPEED = 5
 var velocity = Vector2()
 export var max_hp = 150
@@ -15,9 +16,11 @@ var hp = max_hp
 var is_dead = false
 
 signal fire
+signal cease_fire
 signal activate_shield
 signal deactivate_shield
 signal damage_taken
+signal release_drones
 
 func get_input():
 	var input = Vector2()
@@ -35,15 +38,16 @@ func get_input():
 #	if Input.is_action_pressed('up'):
 #		input.y -= 1
 	if Input.is_action_just_pressed('click'):
-		$Weapon/ShotTimer.start()
-		self.emit_signal('fire', global_rotation)
+		emit_signal('fire', global_rotation)
 	if Input.is_action_just_released("click"):
-		$Weapon/ShotTimer.stop()
+		emit_signal('cease_fire')
 	if Input.is_action_just_pressed("shield"):
 		if not $Shield.is_active and not $Shield.on_cooldown:
 			emit_signal("activate_shield")
 		else: 
 			emit_signal("deactivate_shield")
+	if Input.is_action_just_pressed("drones"):
+		emit_signal("release_drones")
 	
 	return input
 	
@@ -52,30 +56,30 @@ func _process(_delta):
 	if hp == max_hp:
 		$HpRegenTimer.stop()
 	if (hp <= 0 and not is_dead):
-		emit_signal("deactivate_shield")
-		is_dead = true
-		$Sprite.visible = false
-		$ShipDeathSprite.visible = true
-		$AnimationPlayer.play("Death")
-		$DeathExplosion.play()
-		set_collision_layer(0)
+		die()
 
-	
+
+func die():
+	is_dead = true
+	emit_signal("deactivate_shield")
+	set_collision_layer(0)
+	$Sprite.visible = false
+	$ShipDeathSprite.visible = true
+	$AnimationPlayer.play("Death")
+	$DeathExplosion.play()
+
+
 func take_damage(dmg: int, collision=null):
 	hp -= dmg
-#	$Hit.play()
 	$HitTimer.start()
-	$HpRegenTimer.stop()
+
 	if not collision:
 		return
-	
+		
+	$HpRegenTimer.stop()
 	emit_signal("damage_taken")
-	var p = DmgParticles.instance()
-	p.rotation = collision.angle
-	p.set_emitting(true)
-	p.position = collision.pos
-	p.set_as_toplevel(true)
-	add_child(p)
+	particle_manager.create_particle(Particle_Types.SHIP_DMG, collision)
+
 
 func _physics_process(_delta):
 	position.x = clamp(position.x, $ShipCamera.limit_left+50, $ShipCamera.limit_right-50)
@@ -99,7 +103,6 @@ func _physics_process(_delta):
 func _on_ShotTimer_timeout():
 	if not is_dead:
 		self.emit_signal('fire', global_rotation)
-	pass # Replace with function body.
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
@@ -109,7 +112,6 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		$HpRegenTimer.stop()
 		$ShipDeathSprite.visible = false
 		visible = false
-	pass # Replace with function body.
 
 
 func _on_DeathTimer_timeout():
@@ -120,7 +122,6 @@ func _on_DeathTimer_timeout():
 func _on_HitTimer_timeout():
 	$HpRegenTimer.start()
 	combatTextMngr.show_value("REGEN", position + Vector2(0, -50), null, Color('7893ff'))
-	pass # Replace with function body.
 
 
 func _on_HpRegenTimer_timeout():

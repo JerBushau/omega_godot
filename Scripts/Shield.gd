@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 onready var ship = get_parent()
-const DmgParticles = preload("res://Objects/ShieldParticle.tscn")
+const shield_dmg = preload("res://Objects/ShieldParticle.tscn")
 var is_active = false
 var on_cooldown = false
 
@@ -51,7 +51,7 @@ func deactivate():
 
 func consume(collision):
 	ship.take_damage(2)
-	var p = DmgParticles.instance()
+	var p = shield_dmg.instance()
 	p.rotation = collision.angle
 	p.set_emitting(true)
 	p.position = collision.pos
@@ -60,7 +60,9 @@ func consume(collision):
 
 func _on_ShieldTimer_timeout():
 #	deactivate()
+	print('dmg: ' + str(3))
 	ship.take_damage(3)
+	print(ship.hp)
 	
 
 

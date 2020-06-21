@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Particle_Manager",
+"language": "GDScript",
+"path": "res://Scripts/ParticleManager.gd"
+}, {
+"base": "Node",
+"class": "Particle_Types",
+"language": "GDScript",
+"path": "res://Scripts/Particle_Types.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Ship",
 "language": "GDScript",
 "path": "res://Scripts/Ship.gd"
 } ]
 _global_script_class_icons={
+"Particle_Manager": "",
+"Particle_Types": "",
 "Ship": ""
 }
 
@@ -82,6 +94,11 @@ click={
 shield={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+drones={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
  ]
 }
 
