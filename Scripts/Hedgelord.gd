@@ -3,8 +3,8 @@ extends KinematicBody2D
 signal damage_taken
 
 const Eblast = preload("res://Objects/Energy_blast.tscn")
-const DmgParticles = preload("res://Objects/HedgeHogSpineParticle.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
+var pm = ParticleManager
 onready var player = $"../Ship"
 var hp = 700
 var move_speed = 25
@@ -56,13 +56,8 @@ func _physics_process(delta):
 
 func take_damage(dmg: int, crit, collision):
 	hp -= dmg
-	emit_signal('damage_taken', hp)
-	var p = DmgParticles.instance()
-	p.rotation = collision.angle
-	p.set_emitting(true)
-	p.position = collision.pos
-	p.set_as_toplevel(true)
-	add_child(p)
+	Signals.emit_signal('hedge_damage_taken', hp)
+	pm.create_particle_of_type(Particle_Types.HEDGELORD_DMG, collision)
 	
 	if not is_dead:
 		$Sprite.modulate = Color(1.2, 1.2, 1.2, 1)
@@ -82,59 +77,45 @@ func attack(type: int):
 
 
 func straight_seeking_blast():
-	$Energy_blast_attk_timer.wait_time = 0.1
-	$Energy_blast_attk_timer.start()
+	var atk_speed = 0.1
 	var direction
 	if (is_instance_valid(player)):
 		direction = get_angle_to(player.position)
 	else: 
 		direction = 1
-	var eb = Eblast.instance()
-	eb.global_position = self.global_position
-	eb.linear_velocity = Vector2(cos(direction), sin(direction)).normalized() * eb.speed
-	eb.velocity = eb.linear_velocity
-	eb.global_rotation = direction
-	eb.set_as_toplevel(true)
-	add_child(eb)
-
+	
+	energy_blast(atk_speed, direction)
 
 func half_circle_blast():
-	$Energy_blast_attk_timer.wait_time = 1
-	$Energy_blast_attk_timer.start()
+	var atk_speed = 1
+	
 	for n in range(0, 180, 6):
 		var direction = deg2rad(n)
-		var eb = Eblast.instance()
-		eb.global_position = self.global_position
-		eb.linear_velocity = Vector2(cos(direction), sin(direction)).normalized() * eb.speed
-		eb.global_rotation = direction
-		eb.set_as_toplevel(true)
-		add_child(eb)
+		energy_blast(atk_speed, direction)
 
 
 func spiral_blast():
-	$Energy_blast_attk_timer.wait_time = 0.001
-	$Energy_blast_attk_timer.start()
+	var atk_speed = 0.009
 	self.blast_angle += 2
 	if self.blast_angle > 360:
 		self.blast_angle = 0
-	var direction = deg2rad(blast_angle)
-	var eb = Eblast.instance()
-	eb.global_position = self.global_position
-	eb.linear_velocity = Vector2(cos(blast_angle), sin(blast_angle)).normalized() * eb.speed
-	eb.global_rotation = direction
-	eb.set_as_toplevel(true)
-	add_child(eb)
+	var direction = self.blast_angle
 	
+	energy_blast(atk_speed, direction)
 
 func quick_burst():
-	$Attack_timer.wait_time = 0.3
-	$Energy_blast_attk_timer.wait_time = 0.1
+	var atk_dur = 0.3
+	var atk_speed = 0.1
+	var direction = get_angle_to(player.position)
+	
+	energy_blast(atk_speed, direction, atk_dur)
+
+
+func energy_blast(attack_speed_duration=1, direction=1, attack_duration=3.75):
+	$Attack_timer.wait_time = attack_duration
+	$Energy_blast_attk_timer.wait_time = attack_speed_duration
 	$Energy_blast_attk_timer.start()
-	var direction
-	if (is_instance_valid(player)):
-		direction = get_angle_to(player.position)
-	else: 
-		direction = 1
+
 	var eb = Eblast.instance()
 	eb.global_position = self.global_position
 	eb.linear_velocity = Vector2(cos(direction), sin(direction)).normalized() * eb.speed
@@ -147,19 +128,20 @@ func quick_burst():
 func determine_attack(attack_type: int):
 	if is_dead:
 		return
-		
-	if attack_type == 0:
-		straight_seeking_blast()
-	elif attack_type == 1:
-		quick_burst()
-	elif attack_type == 2:
-		spiral_blast()
-	elif attack_type == 3:
-		quick_burst()
-	elif attack_type == 4:
-		straight_seeking_blast()
-	elif attack_type == 5:
-		half_circle_blast()
+	
+	match(attack_type):
+		0:
+			straight_seeking_blast()
+		1:
+			quick_burst()
+		2:
+			spiral_blast()
+		3:
+			quick_burst()
+		4:
+			straight_seeking_blast()
+		5:
+			half_circle_blast()
 
 
 func _on_Energy_blast_attk_timer_timeout():

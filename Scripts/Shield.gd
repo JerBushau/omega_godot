@@ -5,12 +5,13 @@ onready var ship = get_parent()
 const shield_dmg = preload("res://Objects/ShieldParticle.tscn")
 var is_active = false
 var on_cooldown = false
+var pm = ParticleManager
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ship.connect("activate_shield", self, "activate")
-	ship.connect("deactivate_shield", self, "deactivate")
+	Signals.connect("activate_shield", self, "activate")
+	Signals.connect("deactivate_shield", self, "deactivate")
 
 
 func activate():
@@ -51,18 +52,17 @@ func deactivate():
 
 func consume(collision):
 	ship.take_damage(2)
-	var p = shield_dmg.instance()
-	p.rotation = collision.angle
-	p.set_emitting(true)
-	p.position = collision.pos
-	p.set_as_toplevel(true)
-	add_child(p)
+	pm.create_particle_of_type(Particle_Types.SHIELD_DMG, collision)
+#	var p = shield_dmg.instance()
+#	p.rotation = collision.angle
+#	p.set_emitting(true)
+#	p.position = collision.pos
+#	p.set_as_toplevel(true)
+#	add_child(p)
 
 func _on_ShieldTimer_timeout():
 #	deactivate()
-	print('dmg: ' + str(3))
 	ship.take_damage(3)
-	print(ship.hp)
 	
 
 

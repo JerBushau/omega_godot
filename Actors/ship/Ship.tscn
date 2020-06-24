@@ -110,20 +110,20 @@ tracks/1/keys = {
 "values": [ Color( 3, 3, 3, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.639216, 0.980392, 1, 0.341176 )
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=11]
 radius = 48.6621
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 loop = true
 step = 0.05
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=13]
 length = 0.7
 loop = true
 step = 0.05
@@ -152,7 +152,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0.54902 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=14]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -184,7 +184,7 @@ rotation = 1.5708
 texture = ExtResource( 4 )
 vframes = 4
 hframes = 3
-frame = 10
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
@@ -235,15 +235,6 @@ margin_right = 1010.0
 margin_bottom = 585.0
 custom_fonts/font = SubResource( 5 )
 text = "SHIELD"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton" type="TextureButton" parent="HUD"]
-margin_left = 1048.0
-margin_top = 512.0
-margin_right = 1088.0
-margin_bottom = 552.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -303,11 +294,15 @@ __meta__ = {
 anims/Active = SubResource( 8 )
 
 [node name="ProgressBar" type="ProgressBar" parent="HUD/DroneAbility"]
+self_modulate = Color( 1.4, 1.4, 1.4, 1 )
 margin_right = 80.0
 margin_bottom = 80.0
-custom_styles/fg = SubResource( 13 )
-custom_styles/bg = SubResource( 14 )
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
 percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Weapon" type="Position2D" parent="."]
 position = Vector2( 20, 0 )
@@ -378,13 +373,13 @@ frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
 position = Vector2( -9.53674e-07, 0 )
-shape = SubResource( 9 )
+shape = SubResource( 11 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Shield"]
 autoplay = "Wave"
-anims/Active = SubResource( 10 )
-anims/Wave = SubResource( 11 )
+anims/Active = SubResource( 12 )
+anims/Wave = SubResource( 13 )
 
 [node name="Tween" type="Tween" parent="Shield"]
 
@@ -394,7 +389,7 @@ one_shot = true
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="Shield"]
 autoplay = "rotate"
-anims/rotate = SubResource( 12 )
+anims/rotate = SubResource( 14 )
 
 [node name="Drones" type="Node2D" parent="."]
 script = ExtResource( 15 )
@@ -413,5 +408,5 @@ wait_time = 10.0
 [connection signal="timeout" from="Shield/ShieldTimer" to="Shield" method="_on_ShieldTimer_timeout"]
 [connection signal="timeout" from="Shield/ShieldCooldownTimer" to="Shield" method="_on_ShieldCooldownTimer_timeout"]
 [connection signal="timeout" from="Drones/ReleaseTimer" to="Drones" method="_on_ReleaseTimer_timeout"]
-[connection signal="timeout" from="Drones/Cooldown" to="Drones" method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="Drones/Cooldown" to="HUD" method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="Drones/Cooldown" to="Drones" method="_on_Cooldown_timeout"]

@@ -1,9 +1,5 @@
 extends KinematicBody2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 var motion = Vector2(0, 0)
 onready var ship = $"../../../Ship"
 

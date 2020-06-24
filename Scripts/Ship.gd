@@ -2,8 +2,7 @@ class_name Ship
 extends KinematicBody2D
 
 onready var combatTextMngr = $"../Interface/CombatText"
-onready var particle_manager = $"../Interface/Particles"
-
+var pm = ParticleManager
 export (int) var speed = 300
 const Eblast = preload("res://Objects/Energy_blast.tscn")
 const MAX_SPEED = 5
@@ -14,13 +13,6 @@ export var friction = 0.001
 export var acceleration = 0.01
 var hp = max_hp
 var is_dead = false
-
-signal fire
-signal cease_fire
-signal activate_shield
-signal deactivate_shield
-signal damage_taken
-signal release_drones
 
 func get_input():
 	var input = Vector2()
@@ -38,16 +30,16 @@ func get_input():
 #	if Input.is_action_pressed('up'):
 #		input.y -= 1
 	if Input.is_action_just_pressed('click'):
-		emit_signal('fire', global_rotation)
+		Signals.emit_signal('fire', global_rotation)
 	if Input.is_action_just_released("click"):
-		emit_signal('cease_fire')
+		Signals.emit_signal('cease_fire')
 	if Input.is_action_just_pressed("shield"):
 		if not $Shield.is_active and not $Shield.on_cooldown:
-			emit_signal("activate_shield")
+			Signals.emit_signal("activate_shield")
 		else: 
-			emit_signal("deactivate_shield")
+			Signals.emit_signal("deactivate_shield")
 	if Input.is_action_just_pressed("drones"):
-		emit_signal("release_drones")
+		Signals.emit_signal("release_ship_drones")
 	
 	return input
 	
@@ -61,7 +53,7 @@ func _process(_delta):
 
 func die():
 	is_dead = true
-	emit_signal("deactivate_shield")
+	Signals.emit_signal("deactivate_shield")
 	set_collision_layer(0)
 	$Sprite.visible = false
 	$ShipDeathSprite.visible = true
@@ -77,8 +69,8 @@ func take_damage(dmg: int, collision=null):
 		return
 		
 	$HpRegenTimer.stop()
-	emit_signal("damage_taken")
-	particle_manager.create_particle(Particle_Types.SHIP_DMG, collision)
+	Signals.emit_signal("damage_taken", dmg)
+	pm.create_particle_of_type(Particle_Types.SHIP_DMG, collision)
 
 
 func _physics_process(_delta):
@@ -102,7 +94,7 @@ func _physics_process(_delta):
 
 func _on_ShotTimer_timeout():
 	if not is_dead:
-		self.emit_signal('fire', global_rotation)
+		Signals.emit_signal('fire', global_rotation)
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

@@ -1,15 +1,13 @@
 extends Camera2D
 
-onready var ship = get_parent() 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ship.connect("damage_taken", self, "shake")
+	Signals.connect("damage_taken", self, "shake")
 	pass # Replace with function body.
 
 
-func shake():
-	var shake_amount = 10.0
+func shake(_hp):
+	var shake_amount = 12.0
 	$Reset_cam_timer.start()
 
 	set_offset(Vector2( \

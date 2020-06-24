@@ -17,7 +17,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	pass
+	animated_sprite_flip($AnimatedSprite)
+
+
+func animated_sprite_flip(animated_sprite):
+	# flip the sprite on frame 4 so blasts appears to spin
+	if animated_sprite.frame > 4:
+		animated_sprite.flip_h = true 
+	else:
+		animated_sprite.flip_h = false
 
 
 func _integrate_forces(state):

@@ -8,15 +8,12 @@ onready var lvl_scene = $"../.."
 var drone_count = 0
 var on_cooldown = false
 
-signal drone_cd_up
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	Signals.connect("release_ship_drones", self, "drones_on")
 
 
 func _process(_delta):
-	ship.connect("release_drones", self, "drones_on")
 	if drone_count >= 5:
 		$ReleaseTimer.stop()
 
@@ -38,11 +35,9 @@ func release_drone():
 
 func _on_ReleaseTimer_timeout():
 	release_drone()
-	pass # Replace with function body.
 
 
 func _on_Cooldown_timeout():
 	drone_count = 0
 	on_cooldown = false
-	emit_signal("drone_cd_up")
-	pass # Replace with function body.
+	Signals.emit_signal("drone_cd_up")

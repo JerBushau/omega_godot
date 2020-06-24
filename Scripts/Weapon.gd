@@ -10,8 +10,8 @@ var is_shooting = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ship.connect('fire', self, 'shoot')
-	ship.connect('cease_fire', self, 'stop')
+	Signals.connect('fire', self, 'shoot')
+	Signals.connect('cease_fire', self, 'stop')
 
 
 func stop():

@@ -1,7 +1,6 @@
 extends KinematicBody2D
 
-onready var particle_manager = $"../Interface/Particles"
-
+var pm = ParticleManager
 var speed = 8
 var velocity = Vector2.UP
 var steer_force = 300
@@ -32,7 +31,7 @@ func _process(delta):
 
 func take_damage(dmg, collision=null):
 	hp -= dmg
-	particle_manager.create_particle(Particle_Types.SHIP_DMG, { "vel": velocity.angle(), "pos": position, "angle": -rotation })
+	pm.create_particle_of_type(Particle_Types.SHIP_DMG, { "vel": velocity.angle(), "pos": position, "angle": -rotation })
 
 func _integrate_forces(state):
 	if (state.get_contact_count() > 0):
@@ -46,7 +45,7 @@ func seek():
 	if current_target:
 		var desired = (current_target.position - position).normalized() * speed
 		steer = (desired - velocity)
-	return steer
+	return steer	
 
 func _physics_process(delta):
 	acceleration += seek()
@@ -58,13 +57,12 @@ func _physics_process(delta):
 #	linear_velocity.linear_interpolate()
 
 
-func _on_AttackRadius_body_entered(body):
-	print('yes')
+func _on_AttackRadius_body_entered(_body):
 	$AttackTimer.start()
 	pass # Replace with function body.
 
 
-func _on_AttackRadius_area_exited(area):
+func _on_AttackRadius_area_exited(_area):
 	$AttackTimer.stop()
 	pass # Replace with function body.
 

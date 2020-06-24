@@ -104,14 +104,9 @@ anims/Idle = SubResource( 4 )
 wait_time = 3.75
 one_shot = true
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="Hedgehud" type="CanvasLayer" parent="."]
 
-[node name="CanvasLayer" type="Control" parent="CanvasLayer2"]
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Hp_main" type="ProgressBar" parent="CanvasLayer2/CanvasLayer"]
+[node name="Hp_main" type="ProgressBar" parent="Hedgehud"]
 margin_left = 64.0
 margin_top = 8.0
 margin_right = 1152.0
@@ -127,11 +122,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CanvasLayer2/CanvasLayer"]
+[node name="Label" type="Label" parent="Hedgehud"]
 margin_left = 64.0
 margin_top = 24.0
 margin_right = 144.0
-margin_bottom = 38.0
+margin_bottom = 49.0
 custom_fonts/font = SubResource( 7 )
 text = "HEDGELORD"
 __meta__ = {
