@@ -2,7 +2,8 @@ extends Node
 
 
 # Ship
-signal damage_taken
+signal ship_damage_taken
+signal ship_hp_change(hp)
 # Ship weapon
 signal fire
 signal cease_fire
@@ -14,4 +15,4 @@ signal release_ship_drones
 signal drone_cd_up
 
 # Hedgelord
-signal hedge_damage_taken
+signal hedge_hp_change(hp)

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://favicon.png" type="Texture" id=1]
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform vec3 color = vec3(45.0, 23.4, 23.4);
@@ -50,12 +50,12 @@ void fragment() {
 	COLOR = vec4(color, final * 0.02);
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 shader_param/color = Vector3( 45, 23.4, 12.4 )
 
 [node name="Sprite2" type="Sprite"]
-material = SubResource( 6 )
+material = SubResource( 2 )
 position = Vector2( 31.8559, 54.8788 )
 scale = Vector2( 35.9088, 16.0387 )
 texture = ExtResource( 1 )

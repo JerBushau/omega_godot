@@ -1,11 +1,10 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://Assets/ship1.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Ship2-open.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=2]
-[ext_resource path="res://Assets/shield_button.png" type="Texture" id=3]
+[ext_resource path="res://ShipHUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/ship-death.png" type="Texture" id=4]
-[ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Scripts/Weapon.gd" type="Script" id=6]
+[ext_resource path="res://Assets/ship2-dual-lazer.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/ShipCamera.gd" type="Script" id=7]
 [ext_resource path="res://Assets/sounds/enemy_hit.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Assets/sounds/ship_lazer.ogg" type="AudioStream" id=9]
@@ -15,8 +14,7 @@
 [ext_resource path="res://Assets/ship_shield.png" type="Texture" id=13]
 [ext_resource path="res://Scripts/Shield.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/Drones.gd" type="Script" id=15]
-[ext_resource path="res://Scripts/HUD.gd" type="Script" id=16]
-[ext_resource path="res://Assets/drone_button.png" type="Texture" id=17]
+[ext_resource path="res://Actors/ship/Weapon.gd" type="Script" id=18]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Death"
@@ -34,87 +32,24 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 }
 
+[sub_resource type="Animation" id=15]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4 ]
+}
+
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 21.98
 height = 12.3251
-
-[sub_resource type="StyleBoxLine" id=3]
-color = Color( 0.270588, 0.333333, 1, 1 )
-thickness = 10
-
-[sub_resource type="StyleBoxLine" id=4]
-thickness = 10
-
-[sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 5 )
-
-[sub_resource type="DynamicFont" id=6]
-size = 32
-font_data = ExtResource( 5 )
-
-[sub_resource type="Animation" id=7]
-resource_name = "Active"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 0,
-"values": [  ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 3, 3, 3, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "Active"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 0,
-"values": [  ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.1, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 3, 3, 3, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.639216, 0.980392, 1, 0.341176 )
-
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="CircleShape2D" id=11]
 radius = 48.6621
@@ -153,7 +88,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=14]
-length = 2.0
+length = 0.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rotation_degrees")
@@ -162,10 +97,22 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 1, 1.6 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 20.0, 0.0, -20.0 ]
+"values": [ 0.0, 10.0, 0.0, -10.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.258824 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="Ship" type="KinematicBody2D"]
@@ -175,8 +122,13 @@ script = ExtResource( 2 )
 acceleration = 0.02
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -2.4 )
 rotation = 1.5708
+scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 1 )
+vframes = 3
+hframes = 3
+frame = 1
 
 [node name="ShipDeathSprite" type="Sprite" parent="."]
 visible = false
@@ -189,6 +141,7 @@ frame = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
 anims/Death = SubResource( 1 )
+anims/open = SubResource( 15 )
 
 [node name="ShipCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -6.39522, 0.307654 )
@@ -207,112 +160,27 @@ editor_draw_drag_margin = true
 script = ExtResource( 7 )
 
 [node name="Reset_cam_timer" type="Timer" parent="ShipCamera"]
-wait_time = 0.05
+wait_time = 0.02
 
-[node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource( 16 )
+[node name="Weapon" type="Node2D" parent="."]
+position = Vector2( 4.82022, -1.46985 )
+script = ExtResource( 18 )
 
-[node name="HpBar" type="ProgressBar" parent="HUD"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 992.0
-margin_top = 584.0
-margin_right = -8.0
-margin_bottom = 4.0
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 0.760784 )
-max_value = 0.0
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Sprite" type="Sprite" parent="Weapon"]
+position = Vector2( -4.8836, 1.37352 )
+rotation = 1.5708
+scale = Vector2( 1.2, 1.2 )
+z_index = -1
+texture = ExtResource( 6 )
 
-[node name="Label" type="Label" parent="HUD"]
-margin_left = 992.0
-margin_top = 560.0
-margin_right = 1010.0
-margin_bottom = 585.0
-custom_fonts/font = SubResource( 5 )
-text = "SHIELD"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Muzzle2" type="Position2D" parent="Weapon"]
+position = Vector2( 21.3909, -7.02762 )
 
-[node name="ShieldAbility" type="TextureRect" parent="HUD"]
-self_modulate = Color( 1.25098, 1.25098, 1.25098, 1 )
-margin_left = 8.0
-margin_top = 552.0
-margin_right = 88.0
-margin_bottom = 632.0
-rect_scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Muzzle" type="Position2D" parent="Weapon"]
+position = Vector2( 21.3871, 6.29646 )
 
-[node name="Label" type="Label" parent="HUD/ShieldAbility"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -48.0
-margin_bottom = -48.0
-custom_fonts/font = SubResource( 6 )
-text = "Q"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/ShieldAbility"]
-anims/Active = SubResource( 7 )
-
-[node name="DroneAbility" type="TextureRect" parent="HUD"]
-self_modulate = Color( 1.04391, 1.04391, 1.04391, 1 )
-margin_left = 72.0
-margin_top = 552.0
-margin_right = 152.0
-margin_bottom = 632.0
-rect_scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 17 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="HUD/DroneAbility"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -48.0
-margin_bottom = -48.0
-custom_fonts/font = SubResource( 6 )
-text = "E"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/DroneAbility"]
-anims/Active = SubResource( 8 )
-
-[node name="ProgressBar" type="ProgressBar" parent="HUD/DroneAbility"]
-self_modulate = Color( 1.4, 1.4, 1.4, 1 )
-margin_right = 80.0
-margin_bottom = 80.0
-custom_styles/fg = SubResource( 9 )
-custom_styles/bg = SubResource( 10 )
-percent_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Weapon" type="Position2D" parent="."]
-position = Vector2( 20, 0 )
-script = ExtResource( 6 )
-__meta__ = {
-"_gizmo_extents_": 100.0
-}
-
-[node name="ShotTimer" type="Timer" parent="Weapon"]
-wait_time = 0.2
+[node name="ShotTimer" type="Timer" parent="Weapon/Muzzle"]
+wait_time = 0.25
 
 [node name="HpRegenTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -347,7 +215,7 @@ action = "right"
 visibility_mode = 1
 
 [node name="Fire" type="TouchScreenButton" parent="MobileControls"]
-position = Vector2( 1160, 528 )
+position = Vector2( 1160, 512 )
 scale = Vector2( 6, 6 )
 normal = ExtResource( 10 )
 action = "click"
@@ -355,8 +223,7 @@ visibility_mode = 1
 
 [node name="Shield" type="KinematicBody2D" parent="."]
 visible = false
-modulate = Color( 1, 1, 1, 0.972065 )
-rotation = -0.150289
+modulate = Color( 1, 1, 1, 0.699658 )
 collision_layer = 0
 collision_mask = 8
 script = ExtResource( 14 )
@@ -369,7 +236,7 @@ rotation = 1.5708
 texture = ExtResource( 13 )
 vframes = 3
 hframes = 3
-frame = 6
+frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
 position = Vector2( -9.53674e-07, 0 )
@@ -399,14 +266,15 @@ wait_time = 0.2
 
 [node name="Cooldown" type="Timer" parent="Drones"]
 wait_time = 10.0
+
+[node name="HUD" parent="." instance=ExtResource( 3 )]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="ShipCamera/Reset_cam_timer" to="ShipCamera" method="_on_Reset_cam_timer_timeout"]
-[connection signal="timeout" from="Weapon/ShotTimer" to="." method="_on_ShotTimer_timeout"]
+[connection signal="timeout" from="Weapon/Muzzle/ShotTimer" to="." method="_on_ShotTimer_timeout"]
 [connection signal="timeout" from="HpRegenTimer" to="." method="_on_HpRegenTimer_timeout"]
 [connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 [connection signal="timeout" from="Shield/ShieldTimer" to="Shield" method="_on_ShieldTimer_timeout"]
 [connection signal="timeout" from="Shield/ShieldCooldownTimer" to="Shield" method="_on_ShieldCooldownTimer_timeout"]
 [connection signal="timeout" from="Drones/ReleaseTimer" to="Drones" method="_on_ReleaseTimer_timeout"]
-[connection signal="timeout" from="Drones/Cooldown" to="HUD" method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="Drones/Cooldown" to="Drones" method="_on_Cooldown_timeout"]

@@ -17,11 +17,17 @@ hframes = 3
 frame = 2
 
 [node name="InnerCrosshair" type="KinematicBody2D" parent="."]
-motion/sync_to_physics = true
 script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="InnerCrosshair"]
 
 [node name="Sprite" type="Sprite" parent="InnerCrosshair"]
 texture = ExtResource( 3 )
 vframes = 3
 hframes = 3
 frame = 7
+
+[node name="Sprite2" type="Sprite" parent="InnerCrosshair"]
+texture = ExtResource( 3 )
+vframes = 3
+hframes = 3

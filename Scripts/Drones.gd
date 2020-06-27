@@ -14,13 +14,15 @@ func _ready():
 
 
 func _process(_delta):
-	if drone_count >= 5:
+	if drone_count >= 5 and not $ReleaseTimer.is_stopped():
 		$ReleaseTimer.stop()
+		$"../AnimationPlayer".play_backwards("open")
 
 
 func drones_on():
 	if on_cooldown:
 		return 
+	$"../AnimationPlayer".play("open")
 	on_cooldown = true
 	$ReleaseTimer.start()
 	$Cooldown.start()

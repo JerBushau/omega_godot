@@ -1,9 +1,7 @@
 extends KinematicBody2D
 
-signal damage_taken
-
 const Eblast = preload("res://Objects/Energy_blast.tscn")
-onready var combatTextMngr = $"../Interface/CombatText"
+onready var combatTextMngr = $"../../Interface/CombatText"
 var pm = ParticleManager
 onready var player = $"../Ship"
 var hp = 700
@@ -56,7 +54,7 @@ func _physics_process(delta):
 
 func take_damage(dmg: int, crit, collision):
 	hp -= dmg
-	Signals.emit_signal('hedge_damage_taken', hp)
+	Signals.emit_signal('hedge_hp_change', hp)
 	pm.create_particle_of_type(Particle_Types.HEDGELORD_DMG, collision)
 	
 	if not is_dead:

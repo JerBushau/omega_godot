@@ -40,9 +40,6 @@ func _on_Energy_blast_body_entered(body):
 	if (body.has_method('take_damage')):
 		body.take_damage(dmg, collision_obj)
 		queue_free()
-	elif body.has_method('consume'):
-		body.consume(collision_obj)
-		queue_free()
 		
 
 func _on_VisibilityNotifier2D_screen_exited():

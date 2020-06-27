@@ -2,11 +2,11 @@ extends Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Signals.connect("damage_taken", self, "shake")
+	Signals.connect("ship_damage_taken", self, "shake")
 	pass # Replace with function body.
 
 
-func shake(_hp):
+func shake():
 	var shake_amount = 12.0
 	$Reset_cam_timer.start()
 

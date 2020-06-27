@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Actors/Hedgelord/Hedgelord.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Background/level1Bg.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Actors/ship/Ship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/background_start.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/CombatTextManager.gd" type="Script" id=5]
 [ext_resource path="res://Objects/Crosshair.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Levels/L1FadeIn.gd" type="Script" id=7]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ParallaxBackground
@@ -31,31 +33,49 @@ _data = {
 "points": PoolVector2Array( 299.322, 98.1101, -299.322, -98.1101, -6.95356, -227.848, -5.01054, -275.58, 5.01054, 275.58, -509.723, -24.2813, -246, -1.00001, 246, 1.00001, -6, 4.55605, -1.67019, 268.9, 1.67019, -268.9, 494.439, -24.2814, 241.001, -95.6438, -241.001, 95.6438, -6.95356, -227.848 )
 }
 
-[node name="Level1" type="Node"]
+[sub_resource type="Animation" id=3]
+resource_name = "fade-in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
-[node name="Level1Background" parent="." instance=ExtResource( 2 )]
+[node name="Level1" type="Node2D"]
+show_behind_parent = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Level1Background" parent="Node2D" instance=ExtResource( 2 )]
 script = SubResource( 1 )
 
-[node name="Ship" parent="." instance=ExtResource( 3 )]
+[node name="Ship" parent="Node2D" instance=ExtResource( 3 )]
 position = Vector2( -0.0140215, 261.118 )
 rotation = -1.5708
 
-[node name="Hedgelord" parent="." instance=ExtResource( 1 )]
+[node name="Hedgelord" parent="Node2D" instance=ExtResource( 1 )]
 position = Vector2( 1.04645, -153.737 )
 
-[node name="Path2D" type="Path2D" parent="."]
+[node name="Path2D" type="Path2D" parent="Node2D"]
 position = Vector2( 8, 56 )
 rotation = 5.56362e-08
 scale = Vector2( 1, 0.920513 )
 curve = SubResource( 2 )
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/Path2D"]
 position = Vector2( -6.95356, -227.848 )
 rotation = 1.58137
 rotate = false
 cubic_interp = false
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Path2D/PathFollow2D"]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Path2D/PathFollow2D"]
 remote_path = NodePath("../../../Hedgelord")
 update_rotation = false
 update_scale = false
@@ -71,3 +91,17 @@ __meta__ = {
 script = ExtResource( 5 )
 
 [node name="Crosshair" parent="Interface" instance=ExtResource( 6 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 7 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+color = Color( 0, 0, 0, 1 )
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/CanvasModulate"]
+position = Vector2( 28.0001, 104 )
+scale = Vector2( 5.29143, 4.68 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/CanvasModulate"]
+anims/fade-in = SubResource( 3 )

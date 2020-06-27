@@ -9,6 +9,7 @@ func _ready():
 	Signals.connect("activate_shield", self, "shield_on")
 	Signals.connect("deactivate_shield", self, "shield_off")
 	Signals.connect("release_ship_drones", self, "drones_out")
+	Signals.connect("ship_hp_change", self, "update_hp_bar")
 	
 	$HpBar.max_value = ship.max_hp
 	$HpBar.value = ship.max_hp
@@ -16,9 +17,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	$HpBar.value = ship.hp
 	$DroneAbility/ProgressBar.max_value = $"../Drones/Cooldown".wait_time
 	$DroneAbility/ProgressBar.value = $"../Drones/Cooldown".time_left
+
+
+func update_hp_bar(hp):
+	print(hp)
+	$HpBar.value = ship.hp
 
 
 func drones_out():
