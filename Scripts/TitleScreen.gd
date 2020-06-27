@@ -19,9 +19,8 @@ func _ready():
 
 
 func _on_Button_pressed():
-	$Control/AnimationPlayer.play("fade-out")
+	$CanvasLayer/AnimationPlayer.play("fade-out")
 	pass # Replace with function body.
-
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "fade-out":

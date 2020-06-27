@@ -5,20 +5,20 @@
 [ext_resource path="res://Assets/shield_button.png" type="Texture" id=3]
 [ext_resource path="res://Assets/drone_button.png" type="Texture" id=4]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.356863, 0.486275, 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.121569, 0.121569, 0.121569, 1 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 32
 font_data = ExtResource( 2 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 resource_name = "Active"
 length = 2.0
 loop = true
@@ -47,7 +47,7 @@ tracks/1/keys = {
 "values": [ Color( 3, 3, 3, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "Active"
 length = 2.0
 loop = true
@@ -76,10 +76,10 @@ tracks/1/keys = {
 "values": [ Color( 3, 3, 3, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.639216, 0.980392, 1, 0.341176 )
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="HUD" type="CanvasLayer"]
@@ -93,8 +93,8 @@ margin_left = 992.0
 margin_top = 584.0
 margin_right = -8.0
 margin_bottom = -8.0
-custom_styles/fg = SubResource( 3 )
-custom_styles/bg = SubResource( 4 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 0.760784 )
 max_value = 0.0
 percent_visible = false
@@ -107,7 +107,7 @@ margin_left = 992.0
 margin_top = 560.0
 margin_right = 1032.0
 margin_bottom = 585.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 text = "SHIELD"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -131,14 +131,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -48.0
 margin_bottom = -48.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 text = "Q"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShieldAbility"]
-anims/Active = SubResource( 7 )
+anims/Active = SubResource( 5 )
 
 [node name="DroneAbility" type="TextureRect" parent="."]
 self_modulate = Color( 1.04391, 1.04391, 1.04391, 1 )
@@ -158,21 +158,21 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -48.0
 margin_bottom = -48.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 text = "E"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DroneAbility"]
-anims/Active = SubResource( 8 )
+anims/Active = SubResource( 6 )
 
 [node name="ProgressBar" type="ProgressBar" parent="DroneAbility"]
 self_modulate = Color( 1.4, 1.4, 1.4, 1 )
 margin_right = 80.0
 margin_bottom = 80.0
-custom_styles/fg = SubResource( 9 )
-custom_styles/bg = SubResource( 10 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false

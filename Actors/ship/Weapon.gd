@@ -35,9 +35,11 @@ func _process(delta):
 func stop():
 	is_shooting = false
 	$Muzzle/ShotTimer.stop()
+	$AnimationPlayer.seek(0.1)
 
 
 func shoot():
+	$AnimationPlayer.play("shoot")
 	var direction = global_rotation
 	if not is_shooting:
 		is_shooting = true

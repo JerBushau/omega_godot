@@ -4,6 +4,7 @@ extends Node
 # Ship
 signal ship_damage_taken
 signal ship_hp_change(hp)
+signal ship_dead
 # Ship weapon
 signal fire
 signal cease_fire

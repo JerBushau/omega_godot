@@ -53,11 +53,13 @@ func _process(_delta):
 
 func die():
 	is_dead = true
+	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
 	set_collision_layer(0)
 	$Sprite.visible = false
 	$ShipDeathSprite.visible = true
 	$AnimationPlayer.play("Death")
+	$Weapon.visible = false
 	$DeathExplosion.play()
 
 

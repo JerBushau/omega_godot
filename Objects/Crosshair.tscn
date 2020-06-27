@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Scripts/Crosshair.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/OuterCrosshair.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/InnerCrosshair.gd" type="Script" id=2]
 [ext_resource path="res://Assets/crosshair.png" type="Texture" id=3]
+[ext_resource path="res://Objects/Crosshair.gd" type="Script" id=4]
 
 [node name="Crosshair" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="OuterCrosshair" type="Node2D" parent="."]
 script = ExtResource( 1 )

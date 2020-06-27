@@ -10,6 +10,7 @@ func _ready():
 	Signals.connect("deactivate_shield", self, "shield_off")
 	Signals.connect("release_ship_drones", self, "drones_out")
 	Signals.connect("ship_hp_change", self, "update_hp_bar")
+	Signals.connect("drone_cd_up", self, "drones_done")
 	
 	$HpBar.max_value = ship.max_hp
 	$HpBar.value = ship.max_hp
@@ -49,6 +50,6 @@ func shield_on():
 	$ShieldAbility/AnimationPlayer.play("Active")
 	
 
-func _on_Cooldown_timeout():
+func drones_done():
 	deactivate_button($DroneAbility)
 	$DroneAbility/ProgressBar.visible = false

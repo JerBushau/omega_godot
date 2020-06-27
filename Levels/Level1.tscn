@@ -96,6 +96,7 @@ script = ExtResource( 5 )
 script = ExtResource( 7 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+visible = false
 color = Color( 0, 0, 0, 1 )
 
 [node name="Sprite" type="Sprite" parent="CanvasLayer/CanvasModulate"]
