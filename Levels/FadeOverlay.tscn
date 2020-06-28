@@ -25,7 +25,7 @@ script = ExtResource( 2 )
 anims/fade-out = SubResource( 1 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 0, 0, 0, 1 )
 color = Color( 0, 0, 0, 1 )
 
 [node name="Sprite" type="Sprite" parent="CanvasModulate"]
