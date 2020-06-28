@@ -32,4 +32,3 @@ color = Color( 0, 0, 0, 1 )
 position = Vector2( 663, 336 )
 scale = Vector2( 2.00286, 2 )
 texture = ExtResource( 1 )
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
