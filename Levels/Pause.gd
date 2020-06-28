@@ -1,22 +1,24 @@
 extends CanvasLayer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Signals.connect("pause", self, "pause_handler")
 	pause_mode = Node.PAUSE_MODE_PROCESS
-
-
-func pause_handler():
+	Signals.connect("pause", self, "pause_handler")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	$CenterContainer/Control/Button.visible = !$CenterContainer/Control/Button.visible
-	get_tree().paused = !get_tree().paused 
+
+
+func pause():
+	pass
+
+
+func unpause():
+	pass
+
+
+func pause_handler(is_paused):
+	var mouse_mode = Input.MOUSE_MODE_VISIBLE if is_paused else Input.MOUSE_MODE_HIDDEN
+	$CenterContainer/Control/Button.visible = is_paused
+	Input.set_mouse_mode(mouse_mode)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,6 +27,4 @@ func pause_handler():
 
 
 func _on_Button_pressed():
-	$CenterContainer/Control/Button.visible = !$CenterContainer/Control/Button.visible
-	get_tree().paused = !get_tree().paused
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	Signals.emit_signal("pause", false)

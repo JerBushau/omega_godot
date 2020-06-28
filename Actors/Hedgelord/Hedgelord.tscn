@@ -140,6 +140,9 @@ wait_time = 5.0
 
 [node name="HitTimer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+pitch_scale = 0.8
 [connection signal="timeout" from="Energy_blast_attk_timer" to="." method="_on_Energy_blast_attk_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_Attack_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

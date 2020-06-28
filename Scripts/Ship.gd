@@ -41,10 +41,7 @@ func get_input():
 	if Input.is_action_just_pressed("drones"):
 		Signals.emit_signal("release_ship_drones")
 	if Input.is_action_just_pressed("pause"):
-		var is_paused = get_tree().paused
-		print('should emit')
-		Signals.emit_signal("pause")
-		get_tree().paused = !is_paused
+		Signals.emit_signal("pause", true)
 		
 	
 	return input
@@ -59,6 +56,7 @@ func _process(_delta):
 
 func die():
 	is_dead = true
+	$DeathExplosion.play()
 	Signals.emit_signal("level_over", "lose")
 	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
@@ -67,7 +65,6 @@ func die():
 	$ShipDeathSprite.visible = true
 	$AnimationPlayer.play("Death")
 	$Weapon.visible = false
-	$DeathExplosion.play()
 
 
 func update_hp(new_hp):
@@ -84,6 +81,7 @@ func take_damage(dmg: int, collision=null):
 		return
 		
 	$HpRegenTimer.stop()
+#	$Hit.play()
 	Signals.emit_signal("ship_damage_taken")
 	pm.create_particle_of_type(Particle_Types.SHIP_DMG, collision)
 

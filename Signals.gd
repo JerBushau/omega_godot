@@ -20,7 +20,7 @@ signal hedge_hp_change(hp)
 
 
 # Game
-signal pause
+signal pause(is_paused)
 signal fade_to_black(cb)
 signal fade_from_black(cb)
 signal level_over(winOrLose)

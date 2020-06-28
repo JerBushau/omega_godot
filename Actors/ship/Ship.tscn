@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/Ship2-open.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=2]
 [ext_resource path="res://ShipHUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/ship2_w_death.png" type="Texture" id=4]
+[ext_resource path="res://Assets/sounds/mouthLazer.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/ship2-dual-lazer.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/ShipCamera.gd" type="Script" id=7]
 [ext_resource path="res://Assets/sounds/enemy_hit.ogg" type="AudioStream" id=8]
@@ -202,6 +203,11 @@ wait_time = 0.25
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
 anims/shoot = SubResource( 4 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Weapon"]
+stream = ExtResource( 5 )
+volume_db = 1.0
+pitch_scale = 0.95
 
 [node name="HpRegenTimer" type="Timer" parent="."]
 wait_time = 0.5

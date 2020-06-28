@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/LazerMouth.ogg-c56dd7f66397a92870bc37300d1fd972.oggstr"
+
+[deps]
+
+source_file="res://Assets/sounds/LazerMouth.ogg"
+dest_files=[ "res://.import/LazerMouth.ogg-c56dd7f66397a92870bc37300d1fd972.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

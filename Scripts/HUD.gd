@@ -23,7 +23,6 @@ func _process(_delta):
 
 
 func update_hp_bar(hp):
-	print(hp)
 	$HpBar.value = ship.hp
 
 

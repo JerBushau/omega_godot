@@ -39,6 +39,7 @@ func stop():
 
 
 func shoot():
+#	$AudioStreamPlayer2D.play()
 	$AnimationPlayer.play("shoot")
 	var direction = global_rotation
 	if not is_shooting:

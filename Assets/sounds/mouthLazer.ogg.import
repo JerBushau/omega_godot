@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mouthLazer.ogg-6c65451e9c58c78b15c080de773e8893.oggstr"
+
+[deps]
+
+source_file="res://Assets/sounds/mouthLazer.ogg"
+dest_files=[ "res://.import/mouthLazer.ogg-6c65451e9c58c78b15c080de773e8893.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
