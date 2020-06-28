@@ -32,7 +32,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 }
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=2]
 resource_name = "open"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -47,11 +47,11 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=3]
 radius = 21.98
 height = 12.3251
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=4]
 resource_name = "shoot"
 length = 0.1
 step = 0.01
@@ -68,14 +68,14 @@ tracks/0/keys = {
 "values": [ Vector2( 0.82, -1.47 ), Vector2( 4.82, -1.47 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=5]
 radius = 48.6621
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=6]
 loop = true
 step = 0.05
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=7]
 length = 0.7
 loop = true
 step = 0.05
@@ -104,7 +104,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0.54902 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=8]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -159,12 +159,12 @@ frame = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
 anims/Death = SubResource( 1 )
-anims/open = SubResource( 15 )
+anims/open = SubResource( 2 )
 
 [node name="ShipCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -6.39522, 0.307654 )
 rotation = 1.5708
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="ShipCamera" type="Camera2D" parent="."]
 current = true
@@ -201,7 +201,7 @@ position = Vector2( 21.3871, 6.29646 )
 wait_time = 0.25
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
-anims/shoot = SubResource( 16 )
+anims/shoot = SubResource( 4 )
 
 [node name="HpRegenTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -263,13 +263,13 @@ frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
 position = Vector2( -9.53674e-07, 0 )
-shape = SubResource( 11 )
+shape = SubResource( 5 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Shield"]
 autoplay = "Wave"
-anims/Active = SubResource( 12 )
-anims/Wave = SubResource( 13 )
+anims/Active = SubResource( 6 )
+anims/Wave = SubResource( 7 )
 
 [node name="Tween" type="Tween" parent="Shield"]
 
@@ -279,7 +279,7 @@ one_shot = true
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="Shield"]
 autoplay = "rotate"
-anims/rotate = SubResource( 14 )
+anims/rotate = SubResource( 8 )
 
 [node name="Drones" type="Node2D" parent="."]
 script = ExtResource( 15 )

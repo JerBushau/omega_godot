@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -8,7 +8,8 @@ extends CanvasLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$CanvasModulate/AnimationPlayer.play("fade-in")
+	GameInfo.set_boss(GameInfo.bosses.HEDGELORD)
+	Signals.emit_signal("fade_from_black", null)
 	pass # Replace with function body.
 
 

@@ -33,6 +33,7 @@ func _ready():
 func _process(_delta):
 	if (hp <= 0 and not is_dead):
 		is_dead = true
+		Signals.emit_signal("level_over", "win")
 		$Sprite.visible = false
 		$HedgeLordDeathSprite.visible = true
 		$AnimationPlayer.play("Death")
@@ -156,9 +157,15 @@ func _on_Attack_timer_timeout():
 	$AnimationPlayer.play("Idle")
 
 
-func _on_DeathTimer_timeout():
+func change_to_title():
 	queue_free()
-	get_tree().change_scene("res://Levels/TitleScreen.tscn")
+	get_tree().change_scene("res://Levels/GameOver.tscn")
+
+
+
+func _on_DeathTimer_timeout():
+	var cb = funcref(self, "change_to_title")
+	Signals.emit_signal("fade_to_black", cb)
 
 
 func _on_HitTimer_timeout():

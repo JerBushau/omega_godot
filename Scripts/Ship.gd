@@ -40,6 +40,12 @@ func get_input():
 			Signals.emit_signal("deactivate_shield")
 	if Input.is_action_just_pressed("drones"):
 		Signals.emit_signal("release_ship_drones")
+	if Input.is_action_just_pressed("pause"):
+		var is_paused = get_tree().paused
+		print('should emit')
+		Signals.emit_signal("pause")
+		get_tree().paused = !is_paused
+		
 	
 	return input
 	
@@ -53,6 +59,7 @@ func _process(_delta):
 
 func die():
 	is_dead = true
+	Signals.emit_signal("level_over", "lose")
 	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
 	set_collision_layer(0)
@@ -133,9 +140,15 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		visible = false
 
 
-func _on_DeathTimer_timeout():
+func change_to_title():
+	$Weapon.queue_free()
 	queue_free()
-	get_tree().change_scene("res://Levels/TitleScreen.tscn")
+	get_tree().change_scene("res://Levels/GameOver.tscn")
+
+
+func _on_DeathTimer_timeout():
+	var cb = funcref(self, "change_to_title")
+	Signals.emit_signal("fade_to_black", cb)
 
 
 func _on_HitTimer_timeout():

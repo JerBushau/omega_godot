@@ -17,3 +17,10 @@ signal drone_cd_up
 
 # Hedgelord
 signal hedge_hp_change(hp)
+
+
+# Game
+signal pause
+signal fade_to_black(cb)
+signal fade_from_black(cb)
+signal level_over(winOrLose)

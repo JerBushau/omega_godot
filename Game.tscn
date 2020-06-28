@@ -10,3 +10,4 @@ script = ExtResource( 5 )
 [node name="TitleScreen" parent="." instance=ExtResource( 2 )]
 
 [node name="Level1" parent="." instance=ExtResource( 1 )]
+position = Vector2( -16, 10.5 )

@@ -7,6 +7,7 @@
 [ext_resource path="res://NebulaShader.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/title-shader-texture.png" type="Texture" id=6]
 [ext_resource path="res://Assets/title-overlay-texture.png" type="Texture" id=7]
+[ext_resource path="res://Levels/FadeOverlay.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -82,7 +83,7 @@ size = 27
 extra_spacing_char = 5
 font_data = ExtResource( 4 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "fade-out"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -97,7 +98,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 5.0
 loop = true
 tracks/0/type = "value"
@@ -111,21 +112,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "fade-out"
-tracks/0/type = "value"
-tracks/0/path = NodePath("CanvasModulate:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
 [node name="TitleScreen" type="Node"]
@@ -177,21 +163,9 @@ frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
 autoplay = "wobble"
-anims/fade-out = SubResource( 7 )
-anims/wobble = SubResource( 6 )
+anims/fade-out = SubResource( 6 )
+anims/wobble = SubResource( 7 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
-anims/fade-out = SubResource( 8 )
-
-[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
-modulate = Color( 1, 1, 1, 0 )
-
-[node name="Sprite" type="Sprite" parent="CanvasLayer/CanvasModulate"]
-position = Vector2( 661, 332 )
-scale = Vector2( 1.99714, 2.02 )
-texture = ExtResource( 2 )
+[node name="FadeOverlay" parent="." instance=ExtResource( 8 )]
 [connection signal="pressed" from="Control/Button" to="." method="_on_Button_pressed"]
 [connection signal="animation_finished" from="Control/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="animation_finished" from="CanvasLayer/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

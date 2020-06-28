@@ -79,6 +79,7 @@ scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 vframes = 4
 hframes = 2
+frame = 4
 
 [node name="HedgeLordDeathSprite" type="Sprite" parent="."]
 visible = false
