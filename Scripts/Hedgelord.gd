@@ -4,7 +4,7 @@ const Eblast = preload("res://Objects/Energy_blast.tscn")
 onready var combatTextMngr = $"../../Interface/CombatText"
 var pm = ParticleManager
 onready var player = $"../Ship"
-var hp = 700
+var hp = 70
 var move_speed = 25
 onready var path_follow = get_node('../Path2D/PathFollow2D')
 var velocity = Vector2()
@@ -33,6 +33,7 @@ func _ready():
 func _process(_delta):
 	if (hp <= 0 and not is_dead):
 		is_dead = true
+		print('1')
 		Signals.emit_signal("level_over", "win")
 		$Sprite.visible = false
 		$HedgeLordDeathSprite.visible = true
@@ -49,6 +50,7 @@ func _physics_process(delta):
 			else:
 				path_follow.set_offset(path_follow.get_offset() + move_speed * delta)
 	elif is_dead:
+		print(velocity)
 		velocity.y += 1
 		move_and_slide(velocity)
 
@@ -148,6 +150,11 @@ func _on_Energy_blast_attk_timer_timeout():
 
 
 func _on_Attack_timer_timeout():
+	$Energy_blast_attk_timer.stop()
+	is_attacking = false
+	is_stopped = false
+	if is_dead:
+		return
 	if $Attack_timer.get_wait_time() != 3.75:
 		$Attack_timer.set_wait_time(3.75)
 	$Energy_blast_attk_timer.stop()
@@ -158,8 +165,8 @@ func _on_Attack_timer_timeout():
 
 
 func change_to_title():
-	queue_free()
 	get_tree().change_scene("res://Levels/GameOver.tscn")
+	queue_free()
 
 
 
