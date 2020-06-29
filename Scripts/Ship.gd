@@ -75,6 +75,10 @@ func update_hp(new_hp):
 func take_damage(dmg: int, collision=null):
 	var new_hp = hp - dmg
 	update_hp(new_hp)
+	
+	if $Shield.is_active:
+		return
+
 	$HitTimer.start()
 
 	if not collision:

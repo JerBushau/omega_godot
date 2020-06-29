@@ -83,7 +83,7 @@ size = 27
 extra_spacing_char = 5
 font_data = ExtResource( 4 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 5.0
 loop = true
 tracks/0/type = "value"
@@ -148,7 +148,7 @@ frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
 autoplay = "wobble"
-anims/wobble = SubResource( 7 )
+anims/wobble = SubResource( 6 )
 
 [node name="FadeOverlay" parent="." instance=ExtResource( 8 )]
 [connection signal="pressed" from="Control/Button" to="." method="_on_Button_pressed"]
