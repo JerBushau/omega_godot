@@ -1,11 +1,6 @@
 extends Node
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Signals.emit_signal("fade_from_black", null)
@@ -21,7 +16,7 @@ func _ready():
 
 func _on_Button_pressed():
 	var cb = funcref(self, 'fade_callback')
-	Signals.emit_signal("fade_to_black", cb)
+	Signals.emit_signal("fade_to_black", true, null)
 
 func fade_callback():
-		get_tree().change_scene("res://Levels/TransScene.tscn")
+		pass

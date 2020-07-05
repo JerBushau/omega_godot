@@ -2,10 +2,10 @@ extends Node2D
 
 
 const Bullet = preload("res://Objects/LazerBullet.tscn")
-onready var ship = get_parent()
 var damage = 3
 var crit_chance = 5
 var is_shooting = false
+
 
 
 # Called when the node enters the scene tree for the first time.

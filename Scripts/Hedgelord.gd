@@ -25,6 +25,7 @@ var attk_points = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_to_group("Enemies")
 	$AnimationPlayer.play("Idle")
 
 
@@ -171,7 +172,7 @@ func change_to_title():
 
 func _on_DeathTimer_timeout():
 	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", cb)
+	Signals.emit_signal("fade_to_black", true, cb)
 
 
 func _on_HitTimer_timeout():

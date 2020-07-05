@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Actors/boss2/Boss2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Actors/ship/Ship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Level2.gd" type="Script" id=3]
+[ext_resource path="res://Background/level1Bg.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Levels/FadeOverlay.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Interface.tscn" type="PackedScene" id=6]
+
+[node name="Level2" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Boss2" parent="Node2D" groups=[
+"Enemies",
+] instance=ExtResource( 1 )]
+position = Vector2( -1.90735e-06, -360 )
+
+[node name="Ship" parent="Node2D" instance=ExtResource( 2 )]
+position = Vector2( -9.53674e-07, 264 )
+collision_mask = 10
+
+[node name="ParallaxBackground" parent="Node2D" instance=ExtResource( 4 )]
+
+[node name="FadeOverlay" parent="." instance=ExtResource( 5 )]
+me = "l2"
+
+[node name="Interface" parent="." instance=ExtResource( 6 )]

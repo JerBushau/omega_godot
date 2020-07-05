@@ -26,6 +26,8 @@ func drones_on():
 	on_cooldown = true
 	$ReleaseTimer.start()
 	$Cooldown.start()
+	var enemies = get_tree().get_nodes_in_group("Enemies")
+	hedgelord = enemies[0]
 
 
 func release_drone():

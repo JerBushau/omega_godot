@@ -151,5 +151,6 @@ autoplay = "wobble"
 anims/wobble = SubResource( 6 )
 
 [node name="FadeOverlay" parent="." instance=ExtResource( 8 )]
+me = "title"
 [connection signal="pressed" from="Control/Button" to="." method="_on_Button_pressed"]
 [connection signal="animation_finished" from="Control/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

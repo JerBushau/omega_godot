@@ -6,17 +6,21 @@ extends Node2D
 func _ready():
 	$TransTimer.start()
 	$TextFadeInTimer.start()
-	$CanvasLayer/HedgeAnimationPlayer.play("hedge_rotate")
+	$CanvasLayer/RichTextLabel.text = GameInfo.trans_data.active
+#	$CanvasLayer/HedgeAnimationPlayer.play("hedge_rotate")
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$CanvasLayer/hedge.position.x += 7.5
+#	$CanvasLayer/hedge.position.x += 7.5
+	pass
 
 
 func _on_TransTimer_timeout():
-	get_tree().change_scene("res://Levels/Level1.tscn")
+	Signals.emit_signal("trans_complete")
+#	var next_scene = GameInfo.next_scene
+#	get_tree().change_scene("res://Levels/{}.tscn".format(next_scene))
 
 
 func _on_TextFadeInTimer_timeout():

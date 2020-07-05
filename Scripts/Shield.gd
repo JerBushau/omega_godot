@@ -5,12 +5,14 @@ onready var ship = get_parent()
 var is_active = false
 var on_cooldown = false
 var pm = ParticleManager
+var original_scale
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Signals.connect("activate_shield", self, "activate")
 	Signals.connect("deactivate_shield", self, "deactivate")
+	original_scale = scale
 
 
 func activate():
@@ -23,7 +25,7 @@ func activate():
 	$ShieldTimer.start()
 	$ShieldCooldownTimer.start()
 	$Tween.interpolate_property(self, "scale",
-		Vector2(0,0), Vector2(1,1), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		Vector2(0,0), original_scale, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Tween.interpolate_property(self, "modulate:a",
 		0.0, 1.0, 0.2,
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -39,7 +41,7 @@ func deactivate():
 	$ShieldTimer.stop()
 	$CollisionShape2D.disabled = true
 	$Tween.interpolate_property(self, "scale",
-		Vector2(1,1), Vector2(0,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
+		original_scale, Vector2(0,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	$Tween.interpolate_property(self, "modulate:a",
 			1.0, 0.0, 0.2,
 			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)

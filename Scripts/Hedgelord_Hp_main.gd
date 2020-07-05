@@ -4,14 +4,21 @@ extends ProgressBar
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var hedgelord = $"../../" 
+onready var parent = $"../../" 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	max_value = hedgelord.hp
-	value = hedgelord.hp
+	max_value = parent.hp
+	value = parent.hp
 	Signals.connect('hedge_hp_change', self, 'update_hp')
 	pass # Replace with function body.
+
+
+func setup(values, signal_name):
+	print('setup - progbar')
+	max_value = values[0]
+	value = values[1]
+	Signals.connect(signal_name, self, 'update_hp')
 
 
 func update_hp(hp):

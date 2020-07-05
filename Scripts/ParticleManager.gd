@@ -3,11 +3,15 @@ extends Node2D
 const ship_dmg = preload("res://Objects/ShipDmgParticles.tscn")
 const shield_dmg = preload("res://Objects/ShieldParticle.tscn")
 const hedgelord_dmg = preload("res://Objects/HedgeHogSpineParticle.tscn")
+const boss2_explosion = preload("res://Objects/Boss2Explosion.tscn")
+const boss2_dmg = preload("res://Objects/Boss2DMGParticles.tscn")
 
 const particles = {
 	Particle_Types.SHIP_DMG: ship_dmg,
 	Particle_Types.SHIELD_DMG: shield_dmg,
 	Particle_Types.HEDGELORD_DMG: hedgelord_dmg,
+	Particle_Types.BOSS2_DEATH: boss2_explosion,
+	Particle_Types.BOSS2_DMG: boss2_dmg
 }
 
 # Called when the node enters the scene tree for the first time.

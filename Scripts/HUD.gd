@@ -1,8 +1,8 @@
 extends CanvasLayer
 
 
-onready var ship = get_parent()
-
+#onready var ship = get_parent()
+var _parent
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,19 +11,22 @@ func _ready():
 	Signals.connect("release_ship_drones", self, "drones_out")
 	Signals.connect("ship_hp_change", self, "update_hp_bar")
 	Signals.connect("drone_cd_up", self, "drones_done")
-	
-	$HpBar.max_value = ship.max_hp
-	$HpBar.value = ship.max_hp
+
+
+func init(parent):
+	_parent = parent
+	$HpBar.max_value = _parent.max_hp
+	$HpBar.value = _parent.hp
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	$DroneAbility/ProgressBar.max_value = $"../Drones/Cooldown".wait_time
-	$DroneAbility/ProgressBar.value = $"../Drones/Cooldown".time_left
+	$DroneAbility/ProgressBar.max_value = _parent.get_node("Drones/Cooldown").wait_time
+	$DroneAbility/ProgressBar.value = _parent.get_node("Drones/Cooldown").time_left
 
 
 func update_hp_bar(hp):
-	$HpBar.value = ship.hp
+	$HpBar.value = hp
 
 
 func drones_out():

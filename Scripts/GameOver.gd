@@ -12,7 +12,8 @@ func _ready():
 
 
 func _on_Timer_timeout():
-	get_tree().change_scene("res://Levels/TitleScreen.tscn")
+	Signals.emit_signal("fade_complete", "go")
+	pass
 
 
 func _on_TextFadeOutTimer_timeout():

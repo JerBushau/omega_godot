@@ -4,7 +4,7 @@ extends KinematicBody2D
 onready var combatTextMngr = $"../../Interface/CombatText"
 var pm = ParticleManager
 export (int) var speed = 300
-const Eblast = preload("res://Objects/Energy_blast.tscn")
+const HUD = preload("res://ShipHUD.tscn")
 const MAX_SPEED = 5
 var velocity = Vector2()
 export var max_hp = 150
@@ -13,6 +13,17 @@ export var friction = 0.001
 export var acceleration = 0.01
 var hp = max_hp
 var is_dead = false
+
+
+func _ready():
+	# create
+		# hud
+		# weapon(s)
+		# abilities
+	var ship_hud = HUD.instance()
+	ship_hud.init(self)
+	add_child(ship_hud)
+
 
 func get_input():
 	var input = Vector2()
@@ -60,11 +71,13 @@ func die():
 	Signals.emit_signal("level_over", "lose")
 	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
-	set_collision_layer(0)
+	$ShipCollisionShape.disabled = true
+#	set_collision_layer(0)
 	$Sprite.visible = false
 	$ShipDeathSprite.visible = true
 	$AnimationPlayer.play("Death")
 	$Weapon.visible = false
+	
 
 
 func update_hp(new_hp):
@@ -104,7 +117,10 @@ func gain_hp(hp_to_gain):
 func _physics_process(_delta):
 	position.x = clamp(position.x, $ShipCamera.limit_left+50, $ShipCamera.limit_right-50)
 	position.y = clamp(position.y, $ShipCamera.limit_top+50, $ShipCamera.limit_bottom-50)
-#
+	
+	if is_dead:
+		return
+	
 	var m_pos = $Weapon.rotation
 	var aim_speed = deg2rad(1)
 	
@@ -145,12 +161,11 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 func change_to_title():
 	$Weapon.queue_free()
 	queue_free()
-	get_tree().change_scene("res://Levels/GameOver.tscn")
 
 
 func _on_DeathTimer_timeout():
 	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", cb)
+	Signals.emit_signal("fade_to_black", true, cb)
 
 
 func _on_HitTimer_timeout():

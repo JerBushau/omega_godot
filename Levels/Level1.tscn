@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Actors/Hedgelord/Hedgelord.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Background/level1Bg.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Actors/ship/Ship.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/FadeOverlay.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/CombatTextManager.gd" type="Script" id=5]
-[ext_resource path="res://Objects/Crosshair.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Objects/Interface.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scripts/Level1.gd" type="Script" id=7]
 [ext_resource path="res://Levels/Pause.tscn" type="PackedScene" id=8]
 
@@ -69,16 +68,6 @@ remote_path = NodePath("../../../Hedgelord")
 update_rotation = false
 update_scale = false
 
-[node name="Interface" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CombatText" type="Node2D" parent="Interface"]
-script = ExtResource( 5 )
-
-[node name="Crosshair" parent="Interface" instance=ExtResource( 6 )]
+[node name="Interface" parent="." instance=ExtResource( 5 )]
 
 [node name="FadeOverlay" parent="." instance=ExtResource( 4 )]

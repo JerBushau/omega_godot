@@ -1,8 +1,7 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Assets/Ship2-open.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Ship.gd" type="Script" id=2]
-[ext_resource path="res://ShipHUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/ship2_w_death.png" type="Texture" id=4]
 [ext_resource path="res://Assets/sounds/mouthLazer.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/ship2-dual-lazer.png" type="Texture" id=6]
@@ -69,14 +68,14 @@ tracks/0/keys = {
 "values": [ Vector2( 0.82, -1.47 ), Vector2( 4.82, -1.47 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=7]
-radius = 49.8323
+[sub_resource type="CircleShape2D" id=5]
+radius = 50.0
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 loop = true
 step = 0.05
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.7
 loop = true
 step = 0.05
@@ -107,7 +106,6 @@ tracks/1/keys = {
 
 [node name="Ship" type="KinematicBody2D"]
 position = Vector2( 0, 8 )
-rotation = 1.5708
 script = ExtResource( 2 )
 acceleration = 0.02
 
@@ -152,6 +150,8 @@ script = ExtResource( 7 )
 
 [node name="Reset_cam_timer" type="Timer" parent="ShipCamera"]
 wait_time = 0.02
+
+[node name="Tween" type="Tween" parent="ShipCamera"]
 
 [node name="Weapon" type="Node2D" parent="."]
 position = Vector2( 4.82, -1.47 )
@@ -220,8 +220,6 @@ normal = ExtResource( 10 )
 action = "click"
 visibility_mode = 1
 
-[node name="HUD" parent="." instance=ExtResource( 3 )]
-
 [node name="Shield" type="KinematicBody2D" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.989219 )
@@ -241,12 +239,12 @@ frame = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shield"]
 position = Vector2( -9.53674e-07, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 5 )
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Shield"]
 autoplay = "Wave"
-anims/Wave = SubResource( 5 )
+anims/Wave = SubResource( 6 )
 
 [node name="Tween" type="Tween" parent="Shield"]
 
@@ -256,7 +254,7 @@ one_shot = true
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="Shield"]
 autoplay = "rotate"
-anims/rotate = SubResource( 6 )
+anims/rotate = SubResource( 7 )
 
 [node name="Drones" type="Node2D" parent="."]
 script = ExtResource( 15 )

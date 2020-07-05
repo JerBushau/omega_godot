@@ -31,7 +31,7 @@ func _process(delta):
 
 func take_damage(dmg, collision=null):
 	hp -= dmg
-	pm.create_particle_of_type(Particle_Types.SHIP_DMG, { "vel": velocity.angle(), "pos": position, "angle": -rotation })
+	pm.create_particle_of_type(Particle_Types.SHIP_DMG, { "vel": velocity.angle(), "pos": global_position, "angle": -global_rotation })
 
 func _integrate_forces(state):
 	if (state.get_contact_count() > 0):

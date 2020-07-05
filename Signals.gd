@@ -18,9 +18,14 @@ signal drone_cd_up
 # Hedgelord
 signal hedge_hp_change(hp)
 
+# Boss2
+signal boss2_hp_change(hp)
+
 
 # Game
 signal pause(is_paused)
+signal trans_complete
 signal fade_to_black(cb)
 signal fade_from_black(cb)
+signal fade_complete(who)
 signal level_over(winOrLose)
