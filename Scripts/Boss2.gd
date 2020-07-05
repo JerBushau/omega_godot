@@ -84,7 +84,6 @@ func _physics_process(delta):
 		aim(0)
 
 	if direction.length() > 0:
-		print(current_state == states.FOLLOWING)
 		velocity = lerp(velocity, direction.normalized() * speed, acceleration)
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, friction)

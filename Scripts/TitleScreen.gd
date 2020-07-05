@@ -1,11 +1,15 @@
 extends Node
 
+var Fade = preload("res://Levels/FadeOverlay.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Signals.emit_signal("fade_from_black", null)
+	var fade = Fade.instance()
+	fade.me = "title"
+	add_child(fade)
+	Signals.emit_signal("fade_from_black", false, null)
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	$Control/AnimationPlayer.play("wobble")
+#	$Control/AnimationPlayer.play("wobble")
 	pass # Replace with function body.
 
 

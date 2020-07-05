@@ -26,7 +26,8 @@ var game_over_message = ""
 var trans_data = {
 	"lv1": "Now entering Hedgelord space...",
 	"lv2": "Now entering Boggy space...",
-	"active": ""
+	"active": "",
+	"to": ""
 }
 
 var scenes = {
@@ -54,51 +55,63 @@ func _process(_delta):
 
 
 func handle_fade_complete(who):
+	print("current scene ", scenes.current)
 	match(who):
 		"title":
+			print('handle_fade: title')
 			start_level("lv1")
 			return
-		"lv1":
-			change_to_next_scene()
-			return
-		"lv2":
-			change_to_next_scene()
+		"trans":
+			# trans always -> level
+			# so here, need to find out what lvl to trans into
+			print('handle_fade: trans')
+			change_to(trans_data.to)
 			return
 		"go":
-			if win:
+			# game over always -> trans or title
+			print('handle_fade: go')
+			if win and current_lv == "lv2":
+				print('yes')
+				change_to(scenes.title)
+			elif win:
 				start_level(next_lv)
 			else:
-				start_level("title")
-				
+				change_to(scenes.title)
+		_:
+			# always trans -> level -> gameover
+			change_to_next_scene()
+			pass
+	print(scenes.current)
 
-func set_level(current_lv):
-	match(current_lv):
-		"lv1":
-			trans_data.active = trans_data.lv2
-			current_lv = "lv1"
-			next_lv = "lv2"
-		"lv2":
-			current_lv = "lv2"
-			next_lv = "title"
-		"title":
-			trans_data.active = trans_data.lv1
-			current_lv = "title"
-			next_lv = "lv1"
+
+func config_trans(lv):
+	trans_data.active = trans_data[lv]
+	trans_data.to = scenes[lv]
+	
+	if lv == "lv1":
+		current_lv = lv
+		next_lv = "lv2"
+	elif lv == "lv2":
+		current_lv = lv
+		next_lv = "FIN"
+		scenes.next = scenes.title
 
 
 func start_level(lv):
+	print("starting lv {lvl}".format({"lvl": lv}))
 	win = false
-	set_level(current_lv)
+	config_trans(lv)
 	change_to(scenes.trans)
 
 
 func change_to(scene):
+	print("change to", scene)
 	scenes.current = scene
 	get_tree().change_scene("res://Levels/{scene}.tscn".format({ "scene": scene }))
 
 
 func change_to_next_scene():
-	print(scenes.next)
+	print("change to next")
 	change_to(scenes.next)
 	scenes.current = scenes.next
 	scenes.next = scenes.go
@@ -137,4 +150,4 @@ func title_to_trans():
 
 
 func trans_to_lv(lv):
-	
+	pass	

@@ -7,6 +7,7 @@ func _ready():
 	$TransTimer.start()
 	$TextFadeInTimer.start()
 	$CanvasLayer/RichTextLabel.text = GameInfo.trans_data.active
+	print("text:",  GameInfo.trans_data.active)
 #	$CanvasLayer/HedgeAnimationPlayer.play("hedge_rotate")
 	pass # Replace with function body.
 
@@ -18,7 +19,7 @@ func _process(delta):
 
 
 func _on_TransTimer_timeout():
-	Signals.emit_signal("trans_complete")
+	Signals.emit_signal("fade_complete", "trans")
 #	var next_scene = GameInfo.next_scene
 #	get_tree().change_scene("res://Levels/{}.tscn".format(next_scene))
 

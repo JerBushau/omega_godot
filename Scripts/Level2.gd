@@ -1,8 +1,13 @@
 extends Node2D
 
+var Fade = preload("res://Levels/FadeOverlay.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Signals.emit_signal("fade_from_black")
+	var fade = Fade.instance()
+	fade.me = "lv2"
+	add_child(fade)
+	Signals.emit_signal("fade_from_black", false, null)
 	GameInfo.set_boss(GameInfo.bosses.BOSS2)
 
 

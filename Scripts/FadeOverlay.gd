@@ -19,8 +19,7 @@ func fade_to_black(should_change_scene=false, cb=null):
 	is_fading = false
 	
 	if should_change_scene:
-		Signals.emit_signal("fade_complete", me                                                                                                                                                                     )
-
+		Signals.emit_signal("fade_complete", me)
 
 func fade_from_black(should_change_scene=false, cb=null):
 	is_fading = true
