@@ -8,9 +8,9 @@ enum states {
 }
 
 const HUD = preload("res://Hedgehud.tscn")
-onready var combatTextMngr = $"../../Interface/CombatText"
+onready var combatTextMngr = $"../Interface/CombatText"
 var current_state = states.FOLLOWING
-var max_hp = 1200
+var max_hp = 1400
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -26,7 +26,7 @@ var is_hit = false
 func _ready():
 	add_to_group("Enemies")
 	var hud = HUD.instance()
-	hud.setup("Boss2", [max_hp, hp], "boss2_hp_change")
+	hud.setup("Boggy", [max_hp, hp], "boss2_hp_change")
 	add_child(hud)
 	$GrowlTimer.start()
 	$AnimationPlayer.play("idle")
@@ -61,27 +61,28 @@ func _physics_process(delta):
 		
 	var direction = Vector2.ZERO
 	
-	match(current_state):
-		states.FOLLOWING:
-			is_attacking = false
-			$GrowlTimer.wait_time = 3
-			direction = follow()
-		states.HUNTING:
-			$GrowlTimer.wait_time = 6
-			direction = hunt()
-			is_attacking = true
+	if is_instance_valid(player):
+		match(current_state):
+			states.FOLLOWING:
+				is_attacking = false
+				$GrowlTimer.wait_time = 3
+				direction = follow()
+			states.HUNTING:
+				$GrowlTimer.wait_time = 6
+				direction = hunt()
+				is_attacking = true
+		
+		if direction.length() < 300 and current_state == states.HUNTING:
+			acceleration += 0.2
+			speed = 500
+		
+		if player.is_dead:
+			speed = 90
+			acceleration = 0.15
+			direction = Vector2.UP
+			aim(0)
+		
 
-
-	if direction.length() < 300 and current_state == states.HUNTING:
-		acceleration += 0.2
-		speed = 500
-#	else:
-#		aim(0)
-
-	if player.is_dead:
-		speed = 80
-		direction = Vector2(0, -300)
-		aim(0)
 
 	if direction.length() > 0:
 		velocity = lerp(velocity, direction.normalized() * speed, acceleration)
@@ -90,7 +91,7 @@ func _physics_process(delta):
 
 	if is_growling:
 		aim(0)
-		velocity = velocity/1.3
+		velocity = velocity/2.5
 	
 	velocity = move_and_slide(velocity)
 
@@ -196,11 +197,12 @@ func go_for_grab(body):
 		yield(self, "growl_complete")
 	$AnimationPlayer.play("idle")
 	is_attacking = false
+	velocity = Vector2.ZERO
 
 
 func change_to_title():
+	$"../..".send_level_complete(true)
 	queue_free()
-	get_tree().change_scene("res://Levels/GameOver.tscn")
 
 
 func _on_GrowlTimer_timeout():
@@ -215,4 +217,4 @@ func _on_Area2D_body_entered(body):
 
 func _on_Timer_timeout():
 	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", cb)
+	Signals.emit_signal("fade_to_black", "fade_complete", cb)

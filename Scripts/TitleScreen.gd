@@ -5,9 +5,9 @@ var Fade = preload("res://Levels/FadeOverlay.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var fade = Fade.instance()
-	fade.me = "title"
 	add_child(fade)
-	Signals.emit_signal("fade_from_black", false, null)
+
+	Signals.emit_signal("fade_from_black")
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 #	$Control/AnimationPlayer.play("wobble")
 	pass # Replace with function body.
@@ -20,7 +20,7 @@ func _ready():
 
 func _on_Button_pressed():
 	var cb = funcref(self, 'fade_callback')
-	Signals.emit_signal("fade_to_black", true, null)
+	Signals.emit_signal("fade_to_black", "title_complete", null, true)
 
 func fade_callback():
 		pass

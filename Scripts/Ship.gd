@@ -14,7 +14,6 @@ export var acceleration = 0.01
 var hp = max_hp
 var is_dead = false
 
-
 func _ready():
 	# create
 		# hud
@@ -159,13 +158,15 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 
 func change_to_title():
+	$"../..".send_level_complete(false)
 	$Weapon.queue_free()
 	queue_free()
 
 
 func _on_DeathTimer_timeout():
 	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", true, cb)
+	Signals.emit_signal("fade_to_black", "fade_complete", cb)
+	
 
 
 func _on_HitTimer_timeout():

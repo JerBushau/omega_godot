@@ -1,11 +1,12 @@
 extends KinematicBody2D
 
 var motion = Vector2(0, 0)
-onready var ship = $"../../../Node2D/Ship"
-onready var weapon = $"../../../Node2D/Ship/Weapon/"
+onready var ship = $"../../../Ship"
+onready var weapon = $"../../../Ship/Weapon/"
 var velocity = Vector2.ZERO
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(ship, " ", weapon)
 	position = weapon.global_position
 	pass
 

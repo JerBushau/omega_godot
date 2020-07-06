@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 const Eblast = preload("res://Objects/Energy_blast.tscn")
-onready var combatTextMngr = $"../../Interface/CombatText"
+onready var combatTextMngr = $"../Interface/CombatText"
 var pm = ParticleManager
 onready var player = $"../Ship"
 var hp = 700
@@ -165,14 +165,14 @@ func _on_Attack_timer_timeout():
 
 
 func change_to_title():
-	get_tree().change_scene("res://Levels/GameOver.tscn")
+	$"../..".send_level_complete(true)
 	queue_free()
 
 
 
 func _on_DeathTimer_timeout():
 	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", true, cb)
+	Signals.emit_signal("fade_to_black", "fade_complete", cb)
 
 
 func _on_HitTimer_timeout():

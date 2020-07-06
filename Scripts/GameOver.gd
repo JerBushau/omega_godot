@@ -1,9 +1,12 @@
 extends Node2D
 
+export var go_text = "test"
+
+signal game_over_complete
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Label.text = GameInfo.game_over_message
+	$CenterContainer/Label.text = go_text
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -12,7 +15,8 @@ func _ready():
 
 
 func _on_Timer_timeout():
-	Signals.emit_signal("fade_complete", "go")
+	emit_signal("game_over_complete")
+#	Signals.emit_signal("fade_complete", "go")
 	pass
 
 

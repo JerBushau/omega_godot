@@ -1,13 +1,17 @@
 extends Node2D
 
+export var next = ""
+export var trans_text = "NOW ENTERING HEDGELORD SPACE"
+export var lvl = ""
 
+
+signal intro_complete
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$TransTimer.start()
 	$TextFadeInTimer.start()
-	$CanvasLayer/RichTextLabel.text = GameInfo.trans_data.active
-	print("text:",  GameInfo.trans_data.active)
+	$CanvasLayer/RichTextLabel.text = trans_text
 #	$CanvasLayer/HedgeAnimationPlayer.play("hedge_rotate")
 	pass # Replace with function body.
 
@@ -19,9 +23,9 @@ func _process(delta):
 
 
 func _on_TransTimer_timeout():
-	Signals.emit_signal("fade_complete", "trans")
+	emit_signal("intro_complete")
+#	Signals.emit_signal("fade_complete", "trans")
 #	var next_scene = GameInfo.next_scene
-#	get_tree().change_scene("res://Levels/{}.tscn".format(next_scene))
 
 
 func _on_TextFadeInTimer_timeout():

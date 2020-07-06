@@ -56,7 +56,6 @@ tracks/0/keys = {
 }
 
 [node name="Trans" type="Node2D"]
-modulate = Color( 1, 1, 1, 0.381023 )
 script = ExtResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
