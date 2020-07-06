@@ -61,7 +61,7 @@ script = ExtResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Sprite" type="Sprite" parent="CanvasLayer"]
-modulate = Color( 0, 0, 0, 0.86932 )
+modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 525, 288 )
 scale = Vector2( 2.5, 2.44 )
 texture = ExtResource( 1 )

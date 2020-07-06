@@ -4,7 +4,7 @@ const ship_dmg = preload("res://Objects/ShipDmgParticles.tscn")
 const shield_dmg = preload("res://Objects/ShieldParticle.tscn")
 const hedgelord_dmg = preload("res://Objects/HedgeHogSpineParticle.tscn")
 const boss2_explosion = preload("res://Objects/Boss2Explosion.tscn")
-const boss2_dmg = preload("res://Objects/Boss2DMGParticles.tscn")
+const boss2_dmg = preload("res://Objects/Boss2DmgParticles.tscn")
 
 const particles = {
 	Particle_Types.SHIP_DMG: ship_dmg,

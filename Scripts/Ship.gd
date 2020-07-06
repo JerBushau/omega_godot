@@ -1,8 +1,8 @@
 class_name Ship
 extends KinematicBody2D
 
-onready var combatTextMngr = $"../../Interface/CombatText"
-var pm = ParticleManager
+onready var combatTextMngr = $"../Interface/CombatText"
+onready var pm = ParticleManager
 export (int) var speed = 300
 const HUD = preload("res://ShipHUD.tscn")
 const MAX_SPEED = 5

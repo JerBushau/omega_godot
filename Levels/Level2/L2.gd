@@ -10,8 +10,8 @@ var Intro = preload("res://Levels/TransScene.tscn")
 var Level2 = preload("res://Levels/Level2/Level2.tscn")
 var GameOver = preload("res://Levels/GameOver.tscn")
 
-onready var ship = $Level2/MainScene/Ship
-onready var boss = $Level2/MainScene/Hedgelord
+#onready var ship = $Level2/MainScene/Ship
+#onready var boss = $Level2/MainScene/Hedgelord
 
 var states
 var current_state = 0
@@ -63,7 +63,7 @@ func change_state(wol=false):
 	match current_state:
 		0: 
 			new_state = states[current_state].instance()
-			new_state.trans_text = "NOW ENTERING BOGGY SPACE"
+			new_state.trans_text = "NOW ENTERING BOGGY SPACE..."
 			new_state.connect("intro_complete", self, "change_state")
 		1:
 			new_state = states[current_state].instance()

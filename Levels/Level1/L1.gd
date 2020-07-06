@@ -10,8 +10,8 @@ var Intro = preload("res://Levels/TransScene.tscn")
 var Level1 = preload("res://Levels/Level1/Level1.tscn")
 var GameOver = preload("res://Levels/GameOver.tscn")
 
-onready var ship = $Level1/MainScene/Ship
-onready var boss = $Level1/MainScene/Hedgelord
+#onready var ship = $Level1/MainScene/Ship
+#onready var boss = $Level1/MainScene/Hedgelord
 
 var states
 var current_state = 0

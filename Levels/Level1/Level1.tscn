@@ -40,9 +40,6 @@ script = ExtResource( 7 )
 
 [node name="MainScene" type="Node2D" parent="."]
 
-[node name="Level1Background" parent="MainScene" instance=ExtResource( 2 )]
-script = SubResource( 1 )
-
 [node name="Ship" parent="MainScene" instance=ExtResource( 3 )]
 position = Vector2( -0.0140215, 261.118 )
 rotation = -1.5708
@@ -51,6 +48,9 @@ rotation = -1.5708
 position = Vector2( 1.04645, -153.737 )
 
 [node name="Interface" parent="MainScene" instance=ExtResource( 5 )]
+
+[node name="Level1Background" parent="MainScene" instance=ExtResource( 2 )]
+script = SubResource( 1 )
 
 [node name="Path2D" type="Path2D" parent="MainScene"]
 position = Vector2( 8, 56 )

@@ -33,6 +33,7 @@ config/icon="res://Assets/icon.png"
 [autoload]
 
 Signals="*res://Signals.gd"
+ParticleTypes="*res://Scripts/Particle_Types.gd"
 ParticleManager="*res://Scripts/ParticleManager.gd"
 GameInfo="*res://Scripts/GameInfo.gd"
 

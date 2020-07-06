@@ -5,6 +5,7 @@ var Fade = preload("res://Levels/FadeOverlay.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var fade = Fade.instance()
+	fade.start_black()
 	add_child(fade)
 
 	Signals.emit_signal("fade_from_black")
