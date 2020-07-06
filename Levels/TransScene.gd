@@ -2,7 +2,7 @@ extends Node2D
 
 export var next = ""
 export var trans_text = "NOW ENTERING HEDGELORD SPACE"
-export var lvl = ""
+export var lvl = 0
 
 
 signal intro_complete
@@ -18,7 +18,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-#	$CanvasLayer/hedge.position.x += 7.5
+	match(lvl):
+		0:
+			pass
+		1:
+			$CanvasLayer/Hedge.position.x += 360*delta
+		2:
+			$CanvasLayer/Bog.position.x += 360*delta
 	pass
 
 

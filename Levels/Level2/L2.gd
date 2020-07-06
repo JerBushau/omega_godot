@@ -64,6 +64,7 @@ func change_state(wol=false):
 		0: 
 			new_state = states[current_state].instance()
 			new_state.trans_text = "NOW ENTERING BOGGY SPACE..."
+			new_state.lvl = 2
 			new_state.connect("intro_complete", self, "change_state")
 		1:
 			new_state = states[current_state].instance()
