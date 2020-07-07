@@ -59,6 +59,33 @@ func check_level_outcome(wol):
 		is_vicorious = false
 		game_over_message = "YOU DIED\nDEFEATED BY HEDGELORD"
 
+
+func create_intro():
+	var intro = states[0].instance()
+	intro.trans_text = "NOW ENTERING HEDGELORD SPACE..."
+	intro.lvl = 1
+	intro.connect("intro_complete", self, "change_state")
+	
+	return intro
+
+
+func create_level():
+	var level = states[1].instance()
+	level.connect("level_complete", self, "change_state")
+	
+	return level
+
+
+func create_game_over(wol):
+	is_level_over = true
+	check_level_outcome(wol)
+	var go = states[2].instance()
+	go.connect("game_over_complete", self, "change_state")
+	go.go_text = game_over_message
+	
+	return go
+
+
 func change_state(wol=false):
 	print("changing level state ", current_state)
 	var new_state
@@ -67,19 +94,11 @@ func change_state(wol=false):
 	
 	match current_state:
 		0: 
-			new_state = states[current_state].instance()
-			new_state.trans_text = "NOW ENTERING HEDGELORD SPACE"
-			new_state.lvl = 1
-			new_state.connect("intro_complete", self, "change_state")
+			new_state = create_intro()
 		1:
-			new_state = states[current_state].instance()
-			new_state.connect("level_complete", self, "change_state")
+			new_state = create_level()
 		2:
-			is_level_over = true
-			check_level_outcome(wol)
-			new_state = states[current_state].instance()
-			new_state.connect("game_over_complete", self, "change_state")
-			new_state.go_text = game_over_message
+			new_state = create_game_over(wol)
 		3:
 			if is_vicorious:
 				GameInfo.determine_state(true)

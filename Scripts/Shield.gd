@@ -1,7 +1,9 @@
 extends KinematicBody2D
 
+const SHADER = preload("res://Shaders/Outline.shader")
 
 onready var ship = get_parent()
+onready var ship_sprite = $"../Sprite"
 var is_active = false
 var on_cooldown = false
 var pm = ParticleManager
@@ -18,6 +20,14 @@ func _ready():
 func activate():
 	if is_active:
 		return
+
+	var mat = ShaderMaterial.new()
+	mat.shader = SHADER
+	mat.set_shader_param("intensity", 50)
+	mat.set_shader_param("precision", 0.02)
+	mat.set_shader_param("outline_color", Color(0.0, 0.475, 1, 0.5))
+	ship_sprite.set_material(mat)
+	
 	visible = true
 	on_cooldown = true
 	is_active = true
@@ -37,6 +47,7 @@ func activate():
 #	pass
 
 func deactivate():
+	ship_sprite.set_material(null)
 	is_active = false
 	$ShieldTimer.stop()
 	$CollisionShape2D.disabled = true

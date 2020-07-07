@@ -116,7 +116,6 @@ scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 4 )
 vframes = 3
 hframes = 2
-frame = 2
 
 [node name="HedgeAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Hedge"]
 autoplay = "hedge_rotate"
@@ -128,7 +127,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 5 )
 vframes = 3
 hframes = 8
-frame = 21
+frame = 19
 
 [node name="BogAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Bog"]
 autoplay = "idle"

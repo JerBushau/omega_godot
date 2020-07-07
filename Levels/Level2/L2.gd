@@ -78,7 +78,7 @@ func change_state(wol=false):
 		3:
 			if is_vicorious:
 				GameInfo.determine_state()
-				print("congrats lvl2 soon to come")
+				print("congrats more lvls soon to come")
 				return
 
 			GameInfo.reset()

@@ -116,7 +116,6 @@ scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 1 )
 vframes = 3
 hframes = 3
-frame = 1
 
 [node name="ShipDeathSprite" type="Sprite" parent="."]
 visible = false
