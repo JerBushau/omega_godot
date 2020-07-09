@@ -77,7 +77,7 @@ func change_state(wol=false):
 			new_state.go_text = game_over_message
 		3:
 			if is_vicorious:
-				GameInfo.determine_state()
+				GameInfo.determine_state(true)
 				print("congrats more lvls soon to come")
 				return
 

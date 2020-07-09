@@ -16,4 +16,4 @@ spread = 180.0
 initial_velocity = 220.0
 scale_amount = 4.0
 scale_amount_random = 1.0
-color = Color( 0.168627, 0.164706, 0.164706, 0.960784 )
+color = Color( 0.141176, 0.541176, 0.176471, 0.913725 )

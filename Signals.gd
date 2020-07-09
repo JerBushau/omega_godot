@@ -24,7 +24,8 @@ signal boss2_hp_change(hp)
 
 # Game
 signal pause(is_paused)
-signal title_complete
+signal start_game
+signal level_select
 signal fade_to_black(cb)
 signal fade_from_black(cb)
 signal fade_complete(who)

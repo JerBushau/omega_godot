@@ -17,7 +17,8 @@ func unpause():
 
 func pause_handler(is_paused):
 	var mouse_mode = Input.MOUSE_MODE_VISIBLE if is_paused else Input.MOUSE_MODE_HIDDEN
-	$CenterContainer/Control/Button.visible = is_paused
+	$CenterContainer/Control/UnpauseButton.visible = is_paused
+	$CenterContainer/Control/LevelSelectButton.visible = is_paused
 	Input.set_mouse_mode(mouse_mode)
 
 
@@ -26,5 +27,10 @@ func pause_handler(is_paused):
 #	pass
 
 
-func _on_Button_pressed():
+func _on_UnpauseButton_pressed():
 	Signals.emit_signal("pause", false)
+
+
+func _on_LevelSelectButton_pressed():
+	Signals.emit_signal("pause", false)
+	GameInfo.change_to(1)

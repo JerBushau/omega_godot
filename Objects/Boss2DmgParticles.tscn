@@ -17,4 +17,4 @@ initial_velocity_random = 1.0
 scale_amount = 2.0
 scale_amount_random = 1.0
 scale_amount_curve = SubResource( 1 )
-color = Color( 0.152941, 0.152941, 0.152941, 0.913725 )
+color = Color( 0.141176, 0.541176, 0.176471, 0.913725 )

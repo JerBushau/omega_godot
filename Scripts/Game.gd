@@ -12,6 +12,5 @@ func _process(_delta):
 
 
 func pause_game():
-	pass
 #	var is_paused = get_tree().paused
 #	get_tree().paused = !is_paused

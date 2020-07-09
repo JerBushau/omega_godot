@@ -9,8 +9,9 @@ enum states {
 
 const HUD = preload("res://Hedgehud.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
+onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
-var max_hp = 1400
+var max_hp = 14
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -132,6 +133,7 @@ func die():
 	$Area2D/CollisionShape2D.disabled = true
 	$CollisionPolygon2D.disabled = true
 	$Timer.start()
+	bg_animation_player.play("calm")
 	
 
 func take_damage(dmg, crit=false, collision=null):

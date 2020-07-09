@@ -19,9 +19,14 @@ func _ready():
 #	pass
 
 
-func _on_Button_pressed():
-	var cb = funcref(self, 'fade_callback')
-	Signals.emit_signal("fade_to_black", "title_complete", null, true)
-
 func fade_callback():
 		pass
+
+
+func _on_LevelSelect_pressed():
+	Signals.emit_signal("fade_to_black", "level_select", null)
+
+
+func _on_Start_pressed():
+	var cb = funcref(self, 'fade_callback')
+	Signals.emit_signal("fade_to_black", "start_game", null)
