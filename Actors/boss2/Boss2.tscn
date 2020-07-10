@@ -122,7 +122,7 @@ visible = false
 polygon = PoolVector2Array( -56, -16, -56, 32, -48, 48, -32, 64, -24, 64, -32, 48, -32, 40, -32, 32, -16, 40, 8, 40, 40, 24, 32, 48, 24, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 )
 
 [node name="GrowlTimer" type="Timer" parent="."]
-wait_time = 6.0
+wait_time = 12.0
 one_shot = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -137,7 +137,7 @@ wait_time = 6.0
 [node name="Tween2" type="Tween" parent="."]
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 5.5
+wait_time = 4.75
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="GrowlTimer" to="." method="_on_GrowlTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

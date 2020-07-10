@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const Eblast = preload("res://Objects/Energy_blast.tscn")
+const Eblast = preload("res://Objects/SpitterSpit.tscn")
 var is_attacking = false
 var target
 var hp = 40
@@ -18,6 +18,8 @@ func _process(delta):
 
 func take_damage(dmg, is_crit=false, collision=null):
 	hp -= dmg
+	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DMG, collision)
+	
 	if hp <= 0:
 		queue_free()
 
@@ -37,7 +39,7 @@ func find_target():
 
 
 func quick_burst():
-	var atk_dur = 1
+	var atk_dur = 0.5
 	var atk_speed = 0.1
 	target = find_target()
 	

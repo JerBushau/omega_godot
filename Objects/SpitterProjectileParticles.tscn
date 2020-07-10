@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/wobble.png" type="Texture" id=1]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0.0258398, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.984496, 0.0272727 ), -3.51818, 0.0, 0, 0 ]
+
+[node name="CPUParticles2D" type="CPUParticles2D"]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource( 1 )
+spread = 75.75
+initial_velocity = 100.0
+initial_velocity_random = 1.0
+angle_random = 1.0
+scale_amount = 2.0
+scale_amount_random = 1.0
+scale_amount_curve = SubResource( 1 )
+color = Color( 0.38, 4.65, 0.25, 0.99 )

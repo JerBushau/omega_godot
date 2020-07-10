@@ -101,7 +101,7 @@ func take_damage(dmg: int, collision=null):
 
 
 func gain_hp(hp_to_gain):
-	if hp == max_hp:
+	if hp == max_hp or is_dead:
 		return
 	
 	var new_hp = hp_to_gain + hp
