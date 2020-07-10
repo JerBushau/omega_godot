@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/background_start.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/GameOver.gd" type="Script" id=2]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Assets/ship2-dual-lazer.png" type="Texture" id=4]
-[ext_resource path="res://Assets/ship2-nude.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -68,14 +66,5 @@ anims/text-out = SubResource( 2 )
 wait_time = 3.0
 one_shot = true
 autostart = true
-
-[node name="Weap" type="Sprite" parent="."]
-position = Vector2( 256, 720 )
-texture = ExtResource( 4 )
-offset = Vector2( 0, 3 )
-
-[node name="ShipDummy" type="Sprite" parent="Weap"]
-z_index = 1
-texture = ExtResource( 5 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="TextFadeOutTimer" to="." method="_on_TextFadeOutTimer_timeout"]
