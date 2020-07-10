@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal growl_complete
+signal level_end
 
 enum states {
 	FOLLOWING,
@@ -8,10 +9,11 @@ enum states {
 }
 
 const HUD = preload("res://Hedgehud.tscn")
+const spitter = preload("res://Actors/Spitter/Spitter.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
-var max_hp = 14
+var max_hp = 1400
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -36,10 +38,6 @@ func _ready():
 func cast_ray(pos):
 	var space = get_world_2d().direct_space_state
 	var result = space.intersect_ray(position, pos, [self], collision_mask)
-#	if result.size() > 0:
-#		print(result.collider)
-#	else:
-#		print('no')
 
 
 func determine_state():
@@ -98,7 +96,7 @@ func _physics_process(delta):
 
 
 func hunt():
-	speed = 300
+	speed = 275
 	acceleration = 0.1
 #	if not is_attacking:
 #		$AnimationPlayer.play("attack")
@@ -118,6 +116,15 @@ func follow():
 	return direction
 
 
+func spawn_spitter():
+	if is_dead:
+		return
+		
+	var s = spitter.instance()
+	s.setup(global_position)
+	get_parent().add_child(s)
+
+
 func die():
 	is_dead = true
 	Signals.emit_signal("level_over", "win")
@@ -128,7 +135,6 @@ func die():
 	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DEATH, { "vel": velocity.angle(), "pos": global_position, "angle": global_rotation })
 	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0, 0.2)
 	$Tween.start()
-	print('made it past tween')
 	$Sprite.visible = false
 	$Area2D/CollisionShape2D.disabled = true
 	$CollisionPolygon2D.disabled = true
@@ -213,10 +219,13 @@ func _on_GrowlTimer_timeout():
 
 func _on_Area2D_body_entered(body):
 	if body != self and "hp" in body and not is_dead:
-		print(body)
 		go_for_grab(body)
 
 
 func _on_Timer_timeout():
-	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", "fade_complete", cb)
+	emit_signal("level_end", true)
+
+
+func _on_SpawnTimer_timeout():
+	if current_state == states.FOLLOWING:
+		spawn_spitter()

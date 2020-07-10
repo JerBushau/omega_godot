@@ -101,8 +101,8 @@ script = ExtResource( 4 )
 
 [node name="Background" type="Sprite" parent="."]
 self_modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 608, 304 )
-scale = Vector2( 1.73571, 1.5 )
+position = Vector2( 608.251, 302 )
+scale = Vector2( 1.73643, 1.51 )
 texture = ExtResource( 1 )
 
 [node name="Level1Button" type="Button" parent="."]
@@ -115,7 +115,7 @@ margin_bottom = 192.0
 position = Vector2( 64, 64 )
 scale = Vector2( 1.12, 1.09402 )
 frames = SubResource( 6 )
-frame = 1
+frame = 2
 playing = true
 
 [node name="Level2Button" type="Button" parent="."]
@@ -131,7 +131,18 @@ __meta__ = {
 position = Vector2( 64, 64 )
 scale = Vector2( 1.28, 1.28 )
 frames = SubResource( 17 )
-frame = 8
+frame = 4
 playing = true
+
+[node name="Button" type="Button" parent="."]
+margin_left = 576.0
+margin_top = 528.0
+margin_right = 640.0
+margin_bottom = 560.0
+text = "back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Level1Button" to="." method="_on_Level1Button_pressed"]
 [connection signal="pressed" from="Level2Button" to="." method="_on_Level2Button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

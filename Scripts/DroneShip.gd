@@ -16,7 +16,7 @@ var collision_velocity_at_angle
 func _ready():
 	velocity = transform.x * speed
 	rotation = velocity.angle()
-	pass # Replace with function body.
+	add_to_group("Player")
 
 
 func init(new_target, starting_position):

@@ -1,10 +1,12 @@
 extends KinematicBody2D
 
+signal level_end
+
 const Eblast = preload("res://Objects/Energy_blast.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 var pm = ParticleManager
 onready var player = $"../Ship"
-var hp = 70
+var hp = 700
 var move_speed = 25
 onready var path_follow = get_node('../Path2D/PathFollow2D')
 var velocity = Vector2()
@@ -171,8 +173,7 @@ func change_to_title():
 
 
 func _on_DeathTimer_timeout():
-	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", "fade_complete", cb)
+	emit_signal('level_end', true)
 
 
 func _on_HitTimer_timeout():

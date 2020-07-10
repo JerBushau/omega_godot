@@ -1,19 +1,20 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Actors/boss2/Boss2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Actors/ship/Ship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Level2.gd" type="Script" id=3]
 [ext_resource path="res://Assets/bg/boggy-bg-0.png" type="Texture" id=4]
-[ext_resource path="res://Levels/Pause.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/pause/Pause.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Objects/Interface.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/bg/boggy-bg-5.png" type="Texture" id=7]
 [ext_resource path="res://Assets/bg/boggy-bg-1.png" type="Texture" id=8]
 [ext_resource path="res://Assets/bg/boggy-bg-2.png" type="Texture" id=9]
 [ext_resource path="res://Assets/bg/boggy-bg-4.png" type="Texture" id=10]
 [ext_resource path="res://Assets/bg/boggy-bg-3.png" type="Texture" id=11]
-[ext_resource path="res://Assets/bg/boggy-bg-6.png" type="Texture" id=12]
+[ext_resource path="res://Assets/002.png" type="Texture" id=12]
+[ext_resource path="res://Assets/bg/boggy-bg-6.png" type="Texture" id=13]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "calm"
 length = 2.0
 tracks/0/type = "value"
@@ -47,13 +48,25 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.882353, 0.301961, 1.8549, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ParallaxLayer7/Sprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1.31, 1.05, 3.31, 1 ) ]
+"values": [ Color( 1, 1, 1, 0.627451 ), Color( 1, 1, 1, 0.67451 ) ]
 }
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
 uniform vec2 direction = vec2(1.0,0.0);
@@ -66,8 +79,8 @@ void fragment(){
      COLOR = texture(TEXTURE, UV + move);   
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
 shader_param/direction = Vector2( 1, 0 )
 shader_param/speed_scale = 0.4
 
@@ -76,78 +89,90 @@ script = ExtResource( 3 )
 
 [node name="PauseMenu" parent="." instance=ExtResource( 5 )]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="MainScene" type="Node2D" parent="."]
 
-[node name="Boss2" parent="Node2D" groups=[
+[node name="Boss2" parent="MainScene" groups=[
 "Enemies",
 ] instance=ExtResource( 1 )]
 position = Vector2( -1.90735e-06, -360 )
 
-[node name="Ship" parent="Node2D" instance=ExtResource( 2 )]
+[node name="Ship" parent="MainScene" instance=ExtResource( 2 )]
 position = Vector2( -9.53674e-07, 264 )
 collision_mask = 10
 
-[node name="Interface" parent="Node2D" instance=ExtResource( 6 )]
+[node name="Interface" parent="MainScene" instance=ExtResource( 6 )]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="Node2D"]
+[node name="ParallaxBackground" type="ParallaxBackground" parent="MainScene"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/ParallaxBackground"]
-anims/calm = SubResource( 3 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MainScene/ParallaxBackground"]
+anims/calm = SubResource( 1 )
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+[node name="ParallaxLayer" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
 scale = Vector2( 1.5, 1.5 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer"]
 modulate = Color( 0.2, 0.2, 0.2, 0.760784 )
 position = Vector2( 4.60658, 6.79493e-06 )
 scale = Vector2( 1.50199, 1 )
 texture = ExtResource( 4 )
 
-[node name="ParallaxLayer6" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
-scale = Vector2( 1.5, 1.5 )
-motion_scale = Vector2( 1.5, 1 )
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
+motion_scale = Vector2( 1.289, 1 )
+motion_offset = Vector2( -50, 0 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer6"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer4"]
+position = Vector2( -510, -100 )
+rotation = -0.307178
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 13 )
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
+scale = Vector2( 1.5, 1.5 )
+motion_scale = Vector2( 1.1, 1 )
+
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer6"]
 modulate = Color( 0.411765, 0.411765, 0.411765, 1 )
 position = Vector2( 3.21333, 0 )
 scale = Vector2( 1.3, 1 )
 texture = ExtResource( 7 )
 
-[node name="ParallaxLayer7" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
-visible = false
+[node name="ParallaxLayer7" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
 scale = Vector2( 1.5, 1.5 )
 motion_scale = Vector2( 1.1, 1 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer7"]
-modulate = Color( 1, 0.52549, 0.52549, 1 )
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer7"]
+modulate = Color( 1, 1, 1, 0.627451 )
+scale = Vector2( 1.5, 1 )
 texture = ExtResource( 12 )
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
 scale = Vector2( 1.5, 1.5 )
 motion_scale = Vector2( 1.04, 1 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer2"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer2"]
 texture = ExtResource( 8 )
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
+scale = Vector2( 0.5, 0.5 )
 motion_offset = Vector2( 150, 0 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer3"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer3"]
+modulate = Color( 0.552941, 0.552941, 0.552941, 1 )
 texture = ExtResource( 9 )
 
-[node name="ParallaxLayer5" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
 motion_scale = Vector2( 1.08, 1 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/ParallaxLayer5"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/ParallaxLayer5"]
 modulate = Color( 0.47451, 0.47451, 0.47451, 1 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 10 )
 
-[node name="Storm" type="ParallaxLayer" parent="Node2D/ParallaxBackground"]
+[node name="Storm" type="ParallaxLayer" parent="MainScene/ParallaxBackground"]
 scale = Vector2( 1.5, 1.5 )
 
-[node name="Sprite" type="Sprite" parent="Node2D/ParallaxBackground/Storm"]
+[node name="Sprite" type="Sprite" parent="MainScene/ParallaxBackground/Storm"]
 modulate = Color( 0.0627451, 0.0470588, 0.313726, 0.537255 )
-material = SubResource( 2 )
-position = Vector2( 1.11345, 0 )
+material = SubResource( 3 )
+position = Vector2( -1.3113e-06, 0 )
 texture = ExtResource( 11 )

@@ -1,21 +1,34 @@
 extends Node2D
 
-var Fade = preload("res://Levels/FadeOverlay.tscn")
-
 signal level_complete
+signal fade_from_black
+signal fade_to_black
+
+var Fade = preload("res://Levels/FadeOverlay.tscn")
+var fade
+var level_over = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var fade = Fade.instance()
+	fade = Fade.instance()
 	fade.start_black()
 	add_child(fade)
-	Signals.emit_signal("fade_from_black")
+	emit_signal("fade_from_black")
+	
+	$MainScene/Ship.connect("level_end", self, "handle_game_over")
+	$MainScene/Boss2.connect("level_end", self, "handle_game_over")
+	
+	$MainScene/Boss2/SpawnTimer.start()
 
 
-# Called every frame. 'welta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 
-func send_level_complete(wol):
-	emit_signal("level_complete", wol)
+func handle_game_over(wol):
+	if not level_over:
+		level_over = true
+		emit_signal("fade_to_black")
+		yield(fade, "fade_complete")
+		emit_signal("level_complete", wol)

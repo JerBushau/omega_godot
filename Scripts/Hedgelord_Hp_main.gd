@@ -15,7 +15,6 @@ func _ready():
 
 
 func setup(values, signal_name):
-	print('setup - progbar')
 	max_value = values[0]
 	value = values[1]
 	Signals.connect(signal_name, self, 'update_hp')

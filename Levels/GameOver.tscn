@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/background_start.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/GameOver.gd" type="Script" id=2]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/ship2-dual-lazer.png" type="Texture" id=4]
+[ext_resource path="res://Assets/ship2-nude.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -11,6 +13,7 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "text-out"
+length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("CenterContainer/Label:self_modulate")
 tracks/0/interp = 1
@@ -18,10 +21,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.9 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 1, 3, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="GameOver" type="Node2D"]
@@ -41,6 +44,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="CenterContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 513.0
 margin_top = 181.0
 margin_right = 703.0
@@ -64,5 +68,14 @@ anims/text-out = SubResource( 2 )
 wait_time = 3.0
 one_shot = true
 autostart = true
+
+[node name="Weap" type="Sprite" parent="."]
+position = Vector2( 256, 720 )
+texture = ExtResource( 4 )
+offset = Vector2( 0, 3 )
+
+[node name="ShipDummy" type="Sprite" parent="Weap"]
+z_index = 1
+texture = ExtResource( 5 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="TextFadeOutTimer" to="." method="_on_TextFadeOutTimer_timeout"]

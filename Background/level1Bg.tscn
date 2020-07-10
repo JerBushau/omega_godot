@@ -4,7 +4,8 @@
 [ext_resource path="res://Assets/001.png" type="Texture" id=2]
 [ext_resource path="res://Assets/002.png" type="Texture" id=3]
 [ext_resource path="res://Assets/000.png" type="Texture" id=4]
-[ext_resource path="res://NebulaShader.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Shaders/NebulaShader.tscn" type="PackedScene" id=5]
+
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ParallaxBackground

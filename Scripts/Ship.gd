@@ -1,6 +1,8 @@
 class_name Ship
 extends KinematicBody2D
 
+signal level_end
+
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var pm = ParticleManager
 export (int) var speed = 300
@@ -15,13 +17,10 @@ var hp = max_hp
 var is_dead = false
 
 func _ready():
-	# create
-		# hud
-		# weapon(s)
-		# abilities
 	var ship_hud = HUD.instance()
 	ship_hud.init(self)
 	add_child(ship_hud)
+	add_to_group("Player")
 
 
 func get_input():
@@ -71,7 +70,6 @@ func die():
 	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
 	$ShipCollisionShape.disabled = true
-#	set_collision_layer(0)
 	$Sprite.visible = false
 	$ShipDeathSprite.visible = true
 	$AnimationPlayer.play("Death")
@@ -157,15 +155,8 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		visible = false
 
 
-func change_to_title():
-	$"../..".send_level_complete(false)
-	$Weapon.queue_free()
-	queue_free()
-
-
 func _on_DeathTimer_timeout():
-	var cb = funcref(self, "change_to_title")
-	Signals.emit_signal("fade_to_black", "fade_complete", cb)
+	emit_signal("level_end", false)
 	
 
 

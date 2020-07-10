@@ -15,7 +15,7 @@ func _process(_delta):
 
 
 var states ={
-	0: "TitleScreen",
+	0: "Title/TitleScreen",
 	1: "LevelSelect",
 	2: "Level1/L1",
 	3: "Level2/L2"
