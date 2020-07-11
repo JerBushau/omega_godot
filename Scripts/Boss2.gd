@@ -71,7 +71,7 @@ func _physics_process(delta):
 				direction = hunt()
 				is_attacking = true
 		
-		if direction.length() < 300 and current_state == states.HUNTING:
+		if direction.length() < 225 and current_state == states.HUNTING:
 			acceleration += 0.2
 			speed = 500
 		
