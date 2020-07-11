@@ -101,7 +101,7 @@ func change_state(wol=false):
 			new_state = create_game_over(wol)
 		3:
 			if is_vicorious:
-				GameInfo.determine_state(true)
+				GameInfo.determine_state(is_vicorious)
 				return
 
 			GameInfo.reset()

@@ -60,6 +60,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -56, -16, -56, 32, -48, 48, -32, 64, -24, 64, -32, 48, -32, 40, -32, 32, -16, 40, 8, 40, 40, 24, 32, 48, 24, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -48, 48, -40, 64, -40, 64, -40, 48, -40, 40, -32, 32, -16, 40, 8, 40, 40, 24, 32, 48, 32, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -56, 48, -64, 64, -48, 56, -40, 48, -40, 40, -32, 32, -16, 40, 8, 40, 32, 32, 40, 48, 64, 64, 56, 48, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -64, 48, -72, 72, -64, 64, -48, 48, -40, 40, -32, 32, -16, 40, 8, 40, 32, 32, 40, 48, 64, 64, 56, 48, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -48, 48, -40, 64, -40, 56, -40, 48, -40, 40, -32, 32, -16, 40, 8, 40, 32, 32, 32, 48, 32, 64, 48, 48, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2.1, 2.3 ), Vector2( 2, 2 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.462745, 0.462745, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 loop = true

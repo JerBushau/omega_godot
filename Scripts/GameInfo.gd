@@ -33,6 +33,7 @@ func start_game():
 
 
 func change_state(wol):
+	print("win ", wol)
 	if wol:
 		current_state += 1
 	else:

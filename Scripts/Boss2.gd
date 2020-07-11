@@ -13,7 +13,7 @@ const spitter = preload("res://Actors/Spitter/Spitter.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
-var max_hp = 1400
+var max_hp = 14
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -206,11 +206,6 @@ func go_for_grab(body):
 	$AnimationPlayer.play("idle")
 	is_attacking = false
 	velocity = Vector2.ZERO
-
-
-func change_to_title():
-	$"../..".send_level_complete(true)
-	queue_free()
 
 
 func _on_GrowlTimer_timeout():

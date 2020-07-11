@@ -23,10 +23,10 @@ func _process(_delta):
 	pass
 
 
-func handle_game_over(wol):
+func handle_game_over(is_win):
 	if not level_over:
 		level_over = true
 		emit_signal("fade_to_black")
 		yield(fade, "fade_complete")
-		emit_signal("level_complete", wol)
+		emit_signal("level_complete", is_win)
 

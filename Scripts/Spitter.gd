@@ -1,12 +1,14 @@
 extends KinematicBody2D
 
+onready var combatTextMngr = $"../Interface/CombatText"
 const Eblast = preload("res://Objects/SpitterSpit.tscn")
 var is_attacking = false
 var target
-var hp = 40
+var hp = 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_to_group("Enemies")
 	$AttackTimer.start()
 	pass # Replace with function body.
 
@@ -19,8 +21,9 @@ func _process(delta):
 func take_damage(dmg, is_crit=false, collision=null):
 	hp -= dmg
 	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DMG, collision)
-	
+	combatTextMngr.show_value(str(dmg), position + Vector2(0, -75), is_crit)
 	if hp <= 0:
+		ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DEATH, collision)
 		queue_free()
 
 
@@ -32,7 +35,7 @@ func find_target():
 	var possible_targets = get_tree().get_nodes_in_group("Player")
 	
 	if possible_targets:
-		target = possible_targets[0]
+		target = possible_targets[possible_targets.size()-1]
 		return target
 	
 	return null
