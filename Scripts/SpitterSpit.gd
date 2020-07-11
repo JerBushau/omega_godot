@@ -3,7 +3,7 @@ extends RigidBody2D
 var speed = 600
 var direction = Vector2()
 var velocity = Vector2()
-var dmg = 20
+var dmg = 10
 var collision_pos
 var collision_angle
 var collision_velocity_at_angle

@@ -5,6 +5,9 @@ const Eblast = preload("res://Objects/SpitterSpit.tscn")
 var is_attacking = false
 var target
 var hp = 20
+var speed = 0.75
+var velocity = Vector2.ZERO
+var acceleration = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,13 +18,33 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	find_target()
+	$Sprite.rotation = velocity.angle() - deg2rad(90)
 	pass
+
+
+func seek():
+	var steer = Vector2.ZERO
+	if not target or not is_instance_valid(target):
+		return steer
+		
+	var desired = (Vector2(target.position.x + rand_range(-100, 100), target.position.y - rand_range(100, 200)) - position).normalized() * speed
+	steer = (desired - velocity)
+	return steer
+
+
+func _physics_process(delta):
+	acceleration += seek()
+	velocity += acceleration * delta
+	velocity = velocity.clamped(speed)
+	$Sprite.rotation = velocity.angle() - deg2rad(90)
+	move_and_collide(velocity)
 
 
 func take_damage(dmg, is_crit=false, collision=null):
 	hp -= dmg
 	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DMG, collision)
-	combatTextMngr.show_value(str(dmg), position + Vector2(0, -75), is_crit)
+	combatTextMngr.show_value(str(dmg), position + Vector2(0, -50), is_crit)
 	if hp <= 0:
 		ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DEATH, collision)
 		queue_free()
@@ -42,7 +65,7 @@ func find_target():
 
 
 func quick_burst():
-	var atk_dur = 0.5
+	var atk_dur = 0.51
 	var atk_speed = 0.1
 	target = find_target()
 	
@@ -51,7 +74,6 @@ func quick_burst():
 		return
 	
 	var direction = get_angle_to(target.position)
-	$Sprite.global_rotation = direction - deg2rad(90)
 	
 	blast(atk_speed, direction, atk_dur)
 
@@ -75,7 +97,7 @@ func _on_AttackTimer_timeout():
 	if is_attacking:
 		$ShotTimer.start()
 	else:
-		global_rotation = 0
+#		global_rotation = 0
 		$ShotTimer.stop()
 
 

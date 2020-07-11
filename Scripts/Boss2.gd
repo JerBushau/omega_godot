@@ -13,6 +13,7 @@ const spitter = preload("res://Actors/Spitter/Spitter.tscn")
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
+var can_grab = true
 var max_hp = 1400
 var speed = 200
 var hp = max_hp
@@ -32,6 +33,7 @@ func _ready():
 	hud.setup("Boggy", [max_hp, hp], "boss2_hp_change")
 	add_child(hud)
 	$GrowlTimer.start()
+	$SpawnTimer.start()
 	$AnimationPlayer.play("idle")
 
 
@@ -43,8 +45,12 @@ func cast_ray(pos):
 func determine_state():
 	match(current_state):
 		states.FOLLOWING:
+			$GrowlTimer.wait_time = 2.3
+			$SpawnTimer.stop()
 			current_state = states.HUNTING
 		states.HUNTING:
+			$GrowlTimer.wait_time = 6
+			$SpawnTimer.start()
 			current_state = states.FOLLOWING
 			
 
@@ -64,10 +70,8 @@ func _physics_process(delta):
 		match(current_state):
 			states.FOLLOWING:
 				is_attacking = false
-				$GrowlTimer.wait_time = 3
 				direction = follow()
 			states.HUNTING:
-				$GrowlTimer.wait_time = 6
 				direction = hunt()
 				is_attacking = true
 		
@@ -127,6 +131,7 @@ func spawn_spitter():
 
 func die():
 	is_dead = true
+	remove_from_group("Enemies")
 	Signals.emit_signal("level_over", "win")
 	$Tween.interpolate_property(self, "scale", scale, scale*2, 0.2)
 	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0.5, 0.2)
@@ -147,7 +152,7 @@ func take_damage(dmg, crit=false, collision=null):
 	update_hp(new_hp)
 	
 	if not is_dead:
-		combatTextMngr.show_value(str(dmg), position + Vector2(0, -75), crit)
+		combatTextMngr.show_value(str(dmg), position + Vector2(0, -85), crit)
 	
 	if is_hit:
 		return
@@ -198,8 +203,9 @@ func go_for_grab(body):
 	is_attacking = true
 	z_index = 2
 	var dmg = body.hp
-	if body.name == "ship":
-		dmg = body.hp/2
+#	if body.name == "Ship":
+#		if body.get_node("Shield").is_active:
+#			dmg = body.hp/2
 	body.take_damage(dmg)
 	$AnimationPlayer.play("eat")
 	yield($AnimationPlayer, "animation_finished")
@@ -211,6 +217,9 @@ func go_for_grab(body):
 	$AnimationPlayer.play("idle")
 	is_attacking = false
 	velocity = Vector2.ZERO
+
+
+
 
 
 func _on_GrowlTimer_timeout():
@@ -227,5 +236,6 @@ func _on_Timer_timeout():
 
 
 func _on_SpawnTimer_timeout():
-	if current_state == states.FOLLOWING:
+	if current_state == states.FOLLOWING and not player.is_dead:
 		spawn_spitter()
+

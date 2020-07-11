@@ -22,6 +22,8 @@ func _ready():
 
 func find_target():
 	var enemies = get_tree().get_nodes_in_group("Enemies")
+	if not enemies.size() > 0:
+		return Vector2.LEFT
 	current_target = enemies[enemies.size() - 1]
 
 
@@ -79,6 +81,8 @@ func _on_AttackRadius_area_exited(_area):
 
 
 func _on_AttackTimer_timeout():
+	if not is_instance_valid(current_target):
+		return
 	if current_target.has_method("take_damage"):
 		var collision_obj = { "vel": velocity.angle(), "pos": position, "angle": rotation }
 		current_target.take_damage(dmg, false, collision_obj)

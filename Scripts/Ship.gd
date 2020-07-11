@@ -12,7 +12,7 @@ var velocity = Vector2()
 export var max_hp = 150
 export var shield = 100
 export var friction = 0.001
-export var acceleration = 0.01
+export var acceleration = 0.03
 var hp = max_hp
 var is_dead = false
 
@@ -57,6 +57,8 @@ func get_input():
 	
 	
 func _process(_delta):
+	if position.y != 264:
+		position.y = 264
 	if hp == max_hp:
 		$HpRegenTimer.stop()
 	if (hp <= 0 and not is_dead):
