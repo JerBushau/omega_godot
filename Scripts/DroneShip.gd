@@ -14,17 +14,25 @@ var collision_velocity_at_angle
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	find_target()
 	velocity = transform.x * speed
 	rotation = velocity.angle()
 	add_to_group("Player")
 
 
+func find_target():
+	var enemies = get_tree().get_nodes_in_group("Enemies")
+	current_target = enemies[enemies.size() - 1]
+
+
 func init(new_target, starting_position):
-	current_target = new_target
 	position = starting_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if not current_target:
+		find_target()
+		
 	if hp <= 0:
 		queue_free()
 
@@ -42,9 +50,12 @@ func _integrate_forces(state):
 
 func seek():
 	var steer = Vector2.ZERO
-	if current_target:
-		var desired = (current_target.position - position).normalized() * speed
-		steer = (desired - velocity)
+	if not current_target or not is_instance_valid(current_target):
+		find_target()
+		return steer
+		
+	var desired = (current_target.position - position).normalized() * speed
+	steer = (desired - velocity)
 	return steer	
 
 func _physics_process(delta):

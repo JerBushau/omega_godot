@@ -197,10 +197,15 @@ func aim(new_rot):
 func go_for_grab(body):
 	is_attacking = true
 	z_index = 2
-	body.take_damage(body.hp)
+	var dmg = body.hp
+	if body.name == "ship":
+		dmg = body.hp/2
+	body.take_damage(dmg)
 	$AnimationPlayer.play("eat")
 	yield($AnimationPlayer, "animation_finished")
-	if not is_growling:
+	if not is_instance_valid(body):
+		return
+	if not is_growling and "Drone" in body.name:
 		growl()
 		yield(self, "growl_complete")
 	$AnimationPlayer.play("idle")
