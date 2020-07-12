@@ -1,6 +1,6 @@
 extends Node2D
 
-const drone = preload("res://Actors/DroneShip.tscn")
+const drone = preload("res://Actors/DroneShip/DroneShip.tscn")
 onready var hedgelord = $"../../Hedgelord"
 onready var ship = $"../"
 onready var lvl_scene = $"../.."
