@@ -36,7 +36,6 @@ func _ready():
 func _process(_delta):
 	if (hp <= 0 and not is_dead):
 		is_dead = true
-		Signals.emit_signal("level_over", "win")
 		$Sprite.visible = false
 		$HedgeLordDeathSprite.visible = true
 		$AnimationPlayer.play("Death")

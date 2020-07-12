@@ -9,19 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "BaseActor",
+"language": "GDScript",
+"path": "res://Actors/BaseActor.gd"
+}, {
 "base": "Node",
 "class": "Particle_Types",
 "language": "GDScript",
 "path": "res://Scripts/Particle_Types.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Ship",
-"language": "GDScript",
-"path": "res://Scripts/Ship.gd"
 } ]
 _global_script_class_icons={
-"Particle_Types": "",
-"Ship": ""
+"BaseActor": "",
+"Particle_Types": ""
 }
 
 [application]

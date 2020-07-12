@@ -27,7 +27,7 @@ func find_target():
 	current_target = enemies[enemies.size() - 1]
 
 
-func init(new_target, starting_position):
+func init(starting_position):
 	position = starting_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

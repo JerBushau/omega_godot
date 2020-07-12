@@ -107,7 +107,6 @@ tracks/1/keys = {
 [node name="Ship" type="KinematicBody2D"]
 position = Vector2( 0, 8 )
 script = ExtResource( 2 )
-acceleration = 0.02
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -2.4 )
@@ -264,7 +263,6 @@ wait_time = 0.2
 [node name="Cooldown" type="Timer" parent="Drones"]
 wait_time = 10.0
 one_shot = true
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="ShipCamera/Reset_cam_timer" to="ShipCamera" method="_on_Reset_cam_timer_timeout"]
 [connection signal="timeout" from="Weapon/Muzzle/ShotTimer" to="." method="_on_ShotTimer_timeout"]
 [connection signal="timeout" from="HpRegenTimer" to="." method="_on_HpRegenTimer_timeout"]

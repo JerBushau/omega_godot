@@ -1,7 +1,8 @@
 extends CanvasLayer
 
 
-#onready var ship = get_parent()
+# on init, set the 'parent' but doesn't actually need to be the parent. 
+# rather needs to be entity with HP and such we wanna track
 var _parent
 
 # Called when the node enters the scene tree for the first time.
@@ -9,7 +10,7 @@ func _ready():
 	Signals.connect("activate_shield", self, "shield_on")
 	Signals.connect("deactivate_shield", self, "shield_off")
 	Signals.connect("release_ship_drones", self, "drones_out")
-	Signals.connect("ship_hp_change", self, "update_hp_bar")
+	_parent.connect("update_hp", self, "update_hp_bar")
 	Signals.connect("drone_cd_up", self, "drones_done")
 
 

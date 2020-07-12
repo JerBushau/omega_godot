@@ -1,23 +1,22 @@
-class_name Ship
-extends KinematicBody2D
+extends "res://Actors/BaseActor.gd"
 
 signal level_end
 
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var pm = ParticleManager
-export var speed = 300
 const HUD = preload("res://ShipHUD.tscn")
 const MAX_SPEED = 5
-var velocity = Vector2()
-export var max_hp = 150
 export var shield = 100
-export var friction = 0.001
-export var acceleration = 0.03
-var hp = max_hp
-var is_dead = false
 var ship_hud
+var hp_regen_amount = 2
 
 func _ready():
+	speed = 300
+	max_hp = 150
+	hp = max_hp
+	acceleration = 0.03
+	friction = 0.001
+
 	ship_hud = HUD.instance()
 	ship_hud.init(self)
 	add_child(ship_hud)
@@ -52,75 +51,67 @@ func get_input():
 		Signals.emit_signal("release_ship_drones")
 	if Input.is_action_just_pressed("pause"):
 		Signals.emit_signal("pause", true)
-		
 	
 	return input
 	
 	
 func _process(_delta):
-	if position.y != 264:
-		position.y = 264
-	if hp == max_hp:
-		$HpRegenTimer.stop()
+	activate_regen()
+
 	if (hp <= 0 and not is_dead):
 		die()
 
 
 func die():
 	is_dead = true
-	$DeathExplosion.play()
-	Signals.emit_signal("level_over", "lose")
 	Signals.emit_signal("ship_dead")
 	Signals.emit_signal("deactivate_shield")
+	$HitTimer.stop()
+	$HpRegenTimer.stop()
+	$DeathExplosion.play()
 	$ShipCollisionShape.disabled = true
 	$Sprite.visible = false
 	$ShipDeathSprite.visible = true
+
 	$AnimationPlayer.play("Death")
 	$Weapon.visible = false
-
-
-func update_hp(new_hp):
-	hp = new_hp
-	hud.value  = hp
-#	Signals.emit_signal("ship_hp_change", hp)
+	yield($AnimationPlayer, "animation_finished")
+	$DeathTimer.start()
+	visible = false
 
 
 func take_damage(dmg: int, collision=null):
-	var new_hp = hp - dmg
-	update_hp(new_hp)
+	.take_damage(dmg)
+	
+	$HitTimer.start()
 	
 	if $Shield.is_active:
 		return
 
-	$HitTimer.start()
-
 	if not collision:
 		return
-		
+	
 	$HpRegenTimer.stop()
-#	$Hit.play()
+	#change signal name to camera shake or something
 	Signals.emit_signal("ship_damage_taken")
 	pm.create_particle_of_type(Particle_Types.SHIP_DMG, collision)
 
 
 func gain_hp(hp_to_gain):
-	if hp == max_hp or is_dead:
-		return
+	var full_hp = hp == max_hp
 	
-	var new_hp = hp_to_gain + hp
-	if new_hp >= max_hp:
-		new_hp = max_hp
+	if full_hp or is_dead:
+		return
+
+	.gain_hp(hp_to_gain)
+
+	if full_hp:
+		$HpRegenTimer.stop()
 		combatTextMngr.show_value("MAX SHIELDS", position + Vector2(0, -50), null, Color('7893ff'))
-	update_hp(new_hp)
 
 
-func _physics_process(_delta):
-	position.x = clamp(position.x, $ShipCamera.limit_left+50, $ShipCamera.limit_right-50)
-	position.y = clamp(position.y, $ShipCamera.limit_top+50, $ShipCamera.limit_bottom-50)
-	
-	if is_dead:
-		return
-	
+
+func rotate_ship():
 	var m_pos = $Weapon.rotation
 	var aim_speed = deg2rad(1)
 	
@@ -135,13 +126,21 @@ func _physics_process(_delta):
 		rotation -= aim_speed
 	else:
 		pass
-		
+
+
+func clamp_to_screen():
+	position.x = clamp(position.x, $ShipCamera.limit_left+50, $ShipCamera.limit_right-50)
+	position.y = clamp(position.y, $ShipCamera.limit_bottom-50, $ShipCamera.limit_bottom-50)
+
+
+func _physics_process(_delta):
+	if is_dead:
+		return
+
 	var direction = get_input()
-	if direction.length() > 0:
-		velocity = lerp(velocity, direction.normalized() * speed, acceleration)
-	else:
-		velocity = lerp(velocity, Vector2.ZERO, friction)
-	velocity = move_and_slide(velocity)
+	rotate_ship()
+	.move(direction)
+	clamp_to_screen()
 
 
 func _on_ShotTimer_timeout():
@@ -149,29 +148,40 @@ func _on_ShotTimer_timeout():
 		Signals.emit_signal('fire')
 
 
-func _on_AnimationPlayer_animation_finished(anim_name):
-	if anim_name == 'Death':
-		$DeathTimer.start()
-		$HitTimer.stop()
-		$HpRegenTimer.stop()
-		$ShipDeathSprite.visible = false
-		visible = false
-
-
 func _on_DeathTimer_timeout():
 	emit_signal("level_end", false)
 	
 
 
-func _on_HitTimer_timeout():
-	if $HpRegenTimer.is_stopped():
+func activate_regen():
+	var regen_ready = $HitTimer.is_stopped()
+	var regen_stopped = $HpRegenTimer.is_stopped()
+	var hp_full = hp == max_hp
+	var should_activate = (
+		regen_ready 
+		and regen_stopped 
+		and not hp_full
+		and not is_dead
+		and not $Shield.is_active)
+	
+	if should_activate:
 		$HpRegenTimer.start()
 		combatTextMngr.show_value("REGEN", position + Vector2(0, -50), null, Color('7893ff'))
 
 
+func deactivate_regen():
+	$HpRegenTimer.stop()
+
+
+func _on_HitTimer_timeout():
+#	activate_regen()
+	pass
+
+
 func _on_HpRegenTimer_timeout():
+	# don't regen if shield is up
 	if $Shield.is_active:
 		return
-	var amount = 2
-	gain_hp(amount)
-	combatTextMngr.show_value(str("+", amount), position + Vector2(0, -50), null, Color('7893ff'))
+
+	gain_hp(hp_regen_amount)
+	combatTextMngr.show_value(str("+", hp_regen_amount), position + Vector2(0, -50), null, Color('7893ff'))

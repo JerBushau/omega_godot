@@ -8,7 +8,6 @@ var Fade = preload("res://Levels/FadeOverlay.tscn")
 var fade
 var level_over = false
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	fade = Fade.instance()
@@ -18,11 +17,9 @@ func _ready():
 	
 	$MainScene/Ship.connect("level_end", self, "handle_level_over")
 	$MainScene/Boss2.connect("level_end", self, "handle_level_over")
-	
-	$MainScene/Boss2/SpawnTimer.start()
 
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 

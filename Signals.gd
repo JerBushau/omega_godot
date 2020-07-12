@@ -27,6 +27,4 @@ signal pause(is_paused)
 signal start_game
 signal level_select
 
-signal level_over(winOrLose)
-
 

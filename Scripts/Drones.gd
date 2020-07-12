@@ -1,7 +1,6 @@
 extends Node2D
 
 const drone = preload("res://Actors/DroneShip/DroneShip.tscn")
-onready var hedgelord = $"../../Hedgelord"
 onready var ship = $"../"
 onready var lvl_scene = $"../.."
 
@@ -31,7 +30,7 @@ func drones_on():
 func release_drone():
 	drone_count += 1
 	var d = drone.instance()
-	d.init(hedgelord, ship.position)
+	d.init(ship.position)
 	lvl_scene.add_child(d)
 
 

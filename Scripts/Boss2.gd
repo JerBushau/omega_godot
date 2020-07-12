@@ -15,7 +15,7 @@ onready var combatTextMngr = $"../Interface/CombatText"
 onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
 var can_grab = true
-var max_hp = 14
+var max_hp = 1400
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -145,7 +145,6 @@ func death_tween():
 func die():
 	is_dead = true
 	remove_from_group("Enemies")
-	Signals.emit_signal("level_over", "win")
 	death_tween()
 	yield(self, "death_tween_complete")
 	$Sprite.visible = false
