@@ -62,6 +62,17 @@ func _process(_delta):
 		die()
 
 
+func reset():
+	is_dead = false
+	gain_hp(max_hp)
+	$ShipCollisionShape.disabled = false
+	$Sprite.visible = true
+	$ShipDeathSprite.visible = false
+	$Weapon.visible = true
+	visible = true
+	
+
+
 func die():
 	is_dead = true
 	Signals.emit_signal("ship_dead")
@@ -91,7 +102,7 @@ func take_damage(dmg: int, collision=null):
 	if not collision:
 		return
 	
-	$HpRegenTimer.stop()
+	deactivate_regen()
 	#change signal name to camera shake or something
 	Signals.emit_signal("ship_damage_taken")
 	pm.create_particle_of_type(Particle_Types.SHIP_DMG, collision)
@@ -106,7 +117,7 @@ func gain_hp(hp_to_gain):
 	.gain_hp(hp_to_gain)
 
 	if full_hp:
-		$HpRegenTimer.stop()
+		deactivate_regen()
 		combatTextMngr.show_value("MAX SHIELDS", position + Vector2(0, -50), null, Color('7893ff'))
 
 
@@ -171,11 +182,6 @@ func activate_regen():
 
 func deactivate_regen():
 	$HpRegenTimer.stop()
-
-
-func _on_HitTimer_timeout():
-#	activate_regen()
-	pass
 
 
 func _on_HpRegenTimer_timeout():

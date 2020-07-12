@@ -266,7 +266,6 @@ one_shot = true
 [connection signal="timeout" from="ShipCamera/Reset_cam_timer" to="ShipCamera" method="_on_Reset_cam_timer_timeout"]
 [connection signal="timeout" from="Weapon/Muzzle/ShotTimer" to="." method="_on_ShotTimer_timeout"]
 [connection signal="timeout" from="HpRegenTimer" to="." method="_on_HpRegenTimer_timeout"]
-[connection signal="timeout" from="HitTimer" to="." method="_on_HitTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 [connection signal="timeout" from="Shield/ShieldTimer" to="Shield" method="_on_ShieldTimer_timeout"]
 [connection signal="timeout" from="Shield/ShieldCooldownTimer" to="Shield" method="_on_ShieldCooldownTimer_timeout"]

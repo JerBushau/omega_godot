@@ -58,6 +58,8 @@ func determine_state():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if (hp <= 0 and not is_dead):
+		die()
 	pass
 
 
