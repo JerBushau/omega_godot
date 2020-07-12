@@ -5,7 +5,7 @@ signal level_end
 
 onready var combatTextMngr = $"../Interface/CombatText"
 onready var pm = ParticleManager
-export (int) var speed = 300
+export var speed = 300
 const HUD = preload("res://ShipHUD.tscn")
 const MAX_SPEED = 5
 var velocity = Vector2()
@@ -15,9 +15,10 @@ export var friction = 0.001
 export var acceleration = 0.03
 var hp = max_hp
 var is_dead = false
+var ship_hud
 
 func _ready():
-	var ship_hud = HUD.instance()
+	ship_hud = HUD.instance()
 	ship_hud.init(self)
 	add_child(ship_hud)
 	add_to_group("Player")
@@ -76,12 +77,12 @@ func die():
 	$ShipDeathSprite.visible = true
 	$AnimationPlayer.play("Death")
 	$Weapon.visible = false
-	
 
 
 func update_hp(new_hp):
 	hp = new_hp
-	Signals.emit_signal("ship_hp_change", hp)
+	hud.value  = hp
+#	Signals.emit_signal("ship_hp_change", hp)
 
 
 func take_damage(dmg: int, collision=null):

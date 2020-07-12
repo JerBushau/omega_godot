@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal death_tween_complete
 signal growl_complete
 signal level_end
 
@@ -14,7 +15,7 @@ onready var combatTextMngr = $"../Interface/CombatText"
 onready var bg_animation_player = $"../ParallaxBackground/AnimationPlayer"
 var current_state = states.FOLLOWING
 var can_grab = true
-var max_hp = 1400
+var max_hp = 14
 var speed = 200
 var hp = max_hp
 var is_dead = false
@@ -129,17 +130,24 @@ func spawn_spitter():
 	get_parent().add_child(s)
 
 
-func die():
-	is_dead = true
-	remove_from_group("Enemies")
-	Signals.emit_signal("level_over", "win")
+func death_tween():
 	$Tween.interpolate_property(self, "scale", scale, scale*2, 0.2)
 	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0.5, 0.2)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
-	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DEATH, { "vel": velocity.angle(), "pos": global_position, "angle": global_rotation })
+	var col = { "vel": velocity.angle(), "pos": global_position, "angle": global_rotation }
+	ParticleManager.create_particle_of_type(Particle_Types.BOSS2_DEATH, col)
 	$Tween.interpolate_property(self, "modulate:a", modulate.a, 0, 0.2)
 	$Tween.start()
+	emit_signal("death_tween_complete")
+
+
+func die():
+	is_dead = true
+	remove_from_group("Enemies")
+	Signals.emit_signal("level_over", "win")
+	death_tween()
+	yield(self, "death_tween_complete")
 	$Sprite.visible = false
 	$Area2D/CollisionShape2D.disabled = true
 	$CollisionPolygon2D.disabled = true
