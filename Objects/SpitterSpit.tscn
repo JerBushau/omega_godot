@@ -45,6 +45,7 @@ animations = [ {
 radius = 8.0
 
 [node name="SpitterSpit" type="RigidBody2D"]
+z_index = 1
 collision_layer = 8
 mass = 0.00102041
 gravity_scale = 0.0

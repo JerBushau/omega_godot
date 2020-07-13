@@ -13,9 +13,23 @@ func _ready():
 	hp = max_hp
 	speed = 75
 	
+	bounce_in()
+	
 	add_to_group("Enemies")
 	$AttackTimer.start()
 
+
+func bounce_in():
+	var original_scale = Vector2(1,1)
+	$Tween.interpolate_property(self, "scale", Vector2(0,0), original_scale*1.2, 0.15)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$Tween.interpolate_property(self, "scale", scale, original_scale/1.2, 0.1)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$Tween.interpolate_property(self, "scale", scale, original_scale, 0.1)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -74,6 +88,7 @@ func quick_burst():
 		[20, 0, -20]
 	]
 	var random_offset =  possible_offsets[randi() % possible_offsets.size()]
+	# use specific to offset in a particualr order
 	var specific_offset = possible_offsets[attack_offset_index]
 	for i in range(3):
 		var direction = get_angle_to(target.position) + deg2rad(random_offset[i])
@@ -85,8 +100,9 @@ func quick_burst():
 func blast(attack_speed_duration=1, direction=1, attack_duration=3.75):
 #	$AttackTimer.wait_time = attack_duration
 #	$ShotTimer.wait_time = attack_speed_duration
+	$AnimationPlayer.play("spit")
 	var eb = Eblast.instance()
-	eb.global_position = self.global_position
+	eb.global_position = $Position2D.global_position
 	eb.linear_velocity = Vector2(cos(direction), sin(direction)).normalized() * eb.speed
 	eb.velocity = eb.linear_velocity
 	eb.global_rotation = direction
