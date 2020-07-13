@@ -4,6 +4,7 @@ onready var combatTextMngr = $"../Interface/CombatText"
 const Eblast = preload("res://Objects/SpitterSpit.tscn")
 var is_attacking = false
 var target
+var attack_offset_index = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,22 +62,29 @@ func find_target():
 
 func quick_burst():
 	var atk_dur = 0.50
-	var atk_speed = 0.15
+	var atk_speed = 0.24
 	target = find_target()
 	
 	if not target:
 		print('fail')
 		return
-	var offsets = [25, 0, -25]
+	var possible_offsets = [
+		[30, 0, -30],
+		[40, 0, -40],
+		[20, 0, -20]
+	]
+	var random_offset =  possible_offsets[randi() % possible_offsets.size()]
+	var specific_offset = possible_offsets[attack_offset_index]
 	for i in range(3):
-		var direction = get_angle_to(target.position) + deg2rad(offsets[i])
-		print(direction)
+		var direction = get_angle_to(target.position) + deg2rad(random_offset[i])
 		blast(atk_speed, direction, atk_dur)
-
+	attack_offset_index += 1
+	if attack_offset_index > 2:
+		attack_offset_index = 0
 
 func blast(attack_speed_duration=1, direction=1, attack_duration=3.75):
-	$AttackTimer.wait_time = attack_duration
-	$ShotTimer.wait_time = attack_speed_duration
+#	$AttackTimer.wait_time = attack_duration
+#	$ShotTimer.wait_time = attack_speed_duration
 	var eb = Eblast.instance()
 	eb.global_position = self.global_position
 	eb.linear_velocity = Vector2(cos(direction), sin(direction)).normalized() * eb.speed

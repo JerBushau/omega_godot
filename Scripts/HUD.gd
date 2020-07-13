@@ -18,12 +18,13 @@ func init(parent):
 	_parent = parent
 	$HpBar.max_value = _parent.max_hp
 	$HpBar.value = _parent.hp
-
+	$ProgressBar.max_value = _parent.speed
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	$DroneAbility/ProgressBar.max_value = _parent.get_node("Drones/Cooldown").wait_time
 	$DroneAbility/ProgressBar.value = _parent.get_node("Drones/Cooldown").time_left
+	$ProgressBar.value = _parent.velocity.length()
 
 
 func update_hp_bar(hp):
@@ -56,3 +57,16 @@ func shield_on():
 func drones_done():
 	deactivate_button($DroneAbility)
 	$DroneAbility/ProgressBar.visible = false
+
+
+func _on_ProgressBar_value_changed(value):
+#	$Tween.interpolate_method($ProgressBar.get("custom_styles/fg"), "set_bg_color", Color("0081ff"), Color("ffffff"), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+#	$Tween.start()
+	var r = range_lerp(value, 0, 100, 0, 1)
+	var g = range_lerp(value, 0, _parent.speed, 1, 0)
+	var color = Color(r, g, 0)
+	$ProgressBar.get("custom_styles/fg").set_bg_color(color)
+
+
+func _on_Tween_tween_step(object, key, elapsed, value):
+	$ProgressBar.update()

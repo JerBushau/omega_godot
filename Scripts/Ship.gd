@@ -11,11 +11,11 @@ var ship_hud
 var hp_regen_amount = 2
 
 func _ready():
-	speed = 300
+	speed = 325
 	max_hp = 150
 	hp = max_hp
 	acceleration = 0.03
-	friction = 0.001
+	friction = 0.007
 
 	ship_hud = HUD.instance()
 	ship_hud.init(self)
@@ -151,6 +151,7 @@ func _physics_process(_delta):
 	var direction = get_input()
 	rotate_ship()
 	.move(direction)
+	print(velocity.length())
 	clamp_to_screen()
 
 
@@ -188,6 +189,9 @@ func _on_HpRegenTimer_timeout():
 	# don't regen if shield is up
 	if $Shield.is_active:
 		return
+	
+	if  hp == max_hp:
+		$HpRegenTimer.stop()
 
 	gain_hp(hp_regen_amount)
 	combatTextMngr.show_value(str("+", hp_regen_amount), position + Vector2(0, -50), null, Color('7893ff'))

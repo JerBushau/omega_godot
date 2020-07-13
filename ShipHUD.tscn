@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=2]
@@ -81,6 +81,15 @@ bg_color = Color( 0.639216, 0.980392, 1, 0.341176 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.960784, 0.521569, 0.266667, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0, 0, 0.760784 )
 
 [node name="HUD" type="CanvasLayer"]
 layer = 0
@@ -176,3 +185,32 @@ percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Speed" type="Label" parent="."]
+margin_left = 976.0
+margin_top = 520.0
+margin_right = 1032.0
+margin_bottom = 545.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 9 )
+text = "SPEED"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 992.0
+margin_top = 544.0
+margin_right = 1208.0
+margin_bottom = 558.0
+custom_styles/fg = SubResource( 10 )
+custom_styles/bg = SubResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="value_changed" from="ProgressBar" to="." method="_on_ProgressBar_value_changed"]
+[connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]

@@ -116,7 +116,7 @@ func hunt():
 
 
 func follow():
-	speed = 100
+	speed = 160
 	acceleration = 0.029
 	aim(0)
 	var direction = (player.position+Vector2(1, -400) - position)
