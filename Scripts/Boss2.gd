@@ -193,8 +193,9 @@ func update_hp(new_hp):
 
 func growl():
 	is_growling = true
-	$AnimationPlayer.play("growl")
-	yield($AnimationPlayer, "animation_finished")
+	$AnimationPlayer.stop()
+	$GrowlPlayer.play("growl")
+	yield($GrowlPlayer, "animation_finished")
 	$AnimationPlayer.play("idle")
 	is_growling = false
 	determine_state()
