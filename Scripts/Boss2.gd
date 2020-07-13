@@ -233,7 +233,7 @@ func go_for_grab(body):
 
 func _on_GrowlTimer_timeout():
 	growl()
-
+	yield(self, "growl_complete")
 
 func _on_Area2D_body_entered(body):
 	if body != self and "hp" in body and not is_dead:

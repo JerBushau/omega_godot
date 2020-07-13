@@ -151,7 +151,6 @@ func _physics_process(_delta):
 	var direction = get_input()
 	rotate_ship()
 	.move(direction)
-	print(velocity.length())
 	clamp_to_screen()
 
 

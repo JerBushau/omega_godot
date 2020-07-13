@@ -62,7 +62,7 @@ func drones_done():
 func _on_ProgressBar_value_changed(value):
 #	$Tween.interpolate_method($ProgressBar.get("custom_styles/fg"), "set_bg_color", Color("0081ff"), Color("ffffff"), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 #	$Tween.start()
-	var r = range_lerp(value, 0, 100, 0, 1)
+	var r = range_lerp(value, 0, 300, 0, 1)
 	var g = range_lerp(value, 0, _parent.speed, 1, 0)
 	var color = Color(r, g, 0)
 	$ProgressBar.get("custom_styles/fg").set_bg_color(color)
