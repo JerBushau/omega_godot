@@ -17,7 +17,7 @@ func _input(event):
 		s.setup(Vector2(0, -192))
 		add_child(s)
 
-	if Input.is_key_pressed(KEY_1) and just_pressed:
+	if Input.is_key_pressed(KEY_2) and just_pressed:
 		$Ship.reset()
 		$Interface/Crosshair.visible = true
 		
