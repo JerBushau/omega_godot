@@ -9,6 +9,7 @@ const MAX_SPEED = 5
 export var shield = 100
 var ship_hud
 var hp_regen_amount = 2
+var eight_d_control = false
 
 func _ready():
 	speed = 325
@@ -23,6 +24,12 @@ func _ready():
 	add_to_group("Player")
 
 
+func _input(event):
+	var just_pressed = event.is_pressed() and not event.is_echo()
+	if Input.is_key_pressed(KEY_9) and just_pressed:
+		eight_d_control = !eight_d_control
+
+
 func get_input():
 	var input = Vector2()
 	
@@ -33,11 +40,11 @@ func get_input():
 		input.x += 1
 	if Input.is_action_pressed('left'):
 		input.x -= 1
-# no up and down movement in original game
-#	if Input.is_action_pressed('down'):
-#		input.y += 1
-#	if Input.is_action_pressed('up'):
-#		input.y -= 1
+	if eight_d_control:
+		if Input.is_action_pressed('down'):
+			input.y += 1
+		if Input.is_action_pressed('up'):
+			input.y -= 1
 	if Input.is_action_just_pressed('click'):
 		Signals.emit_signal('fire')
 	if Input.is_action_just_released("click"):
@@ -51,6 +58,7 @@ func get_input():
 		Signals.emit_signal("release_ship_drones")
 	if Input.is_action_just_pressed("pause"):
 		Signals.emit_signal("pause", true)
+	
 	
 	return input
 	
@@ -141,7 +149,10 @@ func rotate_ship():
 
 func clamp_to_screen():
 	position.x = clamp(position.x, $ShipCamera.limit_left+50, $ShipCamera.limit_right-50)
-	position.y = clamp(position.y, $ShipCamera.limit_bottom-50, $ShipCamera.limit_bottom-50)
+	if not eight_d_control:
+		position.y = clamp(position.y, $ShipCamera.limit_bottom-50, $ShipCamera.limit_bottom-50)
+	else: 
+		position.y = clamp(position.y, $ShipCamera.limit_top-50, $ShipCamera.limit_bottom-50)
 
 
 func _physics_process(_delta):

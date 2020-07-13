@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/shield_button.png" type="Texture" id=3]
 [ext_resource path="res://Assets/drone_button.png" type="Texture" id=4]
+[ext_resource path="res://Assets/RegenTest.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.356863, 0.486275, 1, 1 )
@@ -186,21 +187,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Speed" type="Label" parent="."]
-margin_left = 976.0
+[node name="Speedometer" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Label" parent="Speedometer"]
+margin_left = 992.0
 margin_top = 520.0
-margin_right = 1032.0
+margin_right = 1048.0
 margin_bottom = 545.0
-grow_horizontal = 0
 custom_fonts/font = SubResource( 9 )
 text = "SPEED"
-align = 2
 valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="Speedometer"]
 margin_left = 992.0
 margin_top = 544.0
 margin_right = 1208.0
@@ -214,6 +220,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="."]
-[connection signal="value_changed" from="ProgressBar" to="." method="_on_ProgressBar_value_changed"]
-[connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]
+[node name="Tween" type="Tween" parent="Speedometer"]
+
+[node name="RegenStatus" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="RegenStatus"]
+visible = false
+margin_left = 552.0
+margin_top = 472.0
+margin_right = 660.0
+margin_bottom = 572.0
+max_value = 5.0
+step = 0.01
+texture_progress = ExtResource( 5 )
+fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="Speedometer/ProgressBar" to="." method="_on_ProgressBar_value_changed"]
+[connection signal="tween_step" from="Speedometer/Tween" to="." method="_on_Tween_tween_step"]

@@ -61,6 +61,12 @@ func take_damage(dmg, is_crit=false, collision=null):
 
 func setup(pos):
 	position = pos
+	var should_invert = randf() > 0.50
+	var initial_horizontal_velocity =  rand_range(175, 275)
+	if should_invert:
+		initial_horizontal_velocity *= -1 
+	print(should_invert)
+	velocity = Vector2(initial_horizontal_velocity, 0)
 
 
 func find_target():
