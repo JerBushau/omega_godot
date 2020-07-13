@@ -18,13 +18,19 @@ func init(parent):
 	_parent = parent
 	$HpBar.max_value = _parent.max_hp
 	$HpBar.value = _parent.hp
-	$ProgressBar.max_value = _parent.speed
+	$Speedometer/ProgressBar.max_value = _parent.speed
+	$DroneAbility/ProgressBar.max_value = _parent.get_node("Drones/Cooldown").wait_time
+	$RegenStatus/TextureProgress.max_value = _parent.get_node("HitTimer").wait_time
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	$DroneAbility/ProgressBar.max_value = _parent.get_node("Drones/Cooldown").wait_time
 	$DroneAbility/ProgressBar.value = _parent.get_node("Drones/Cooldown").time_left
-	$ProgressBar.value = _parent.velocity.length()
+	$Speedometer/ProgressBar.value = _parent.velocity.length()
+	$RegenStatus/TextureProgress.value = _parent.get_node("HitTimer").time_left
+
+
+func _physics_process(delta):
+	$RegenStatus/TextureProgress.rect_global_position = _parent.global_position
 
 
 func update_hp_bar(hp):
@@ -65,8 +71,8 @@ func _on_ProgressBar_value_changed(value):
 	var r = range_lerp(value, 0, 300, 0, 1)
 	var g = range_lerp(value, 0, _parent.speed, 1, 0)
 	var color = Color(r, g, 0)
-	$ProgressBar.get("custom_styles/fg").set_bg_color(color)
+	$Speedometer/ProgressBar.get("custom_styles/fg").set_bg_color(color)
 
 
 func _on_Tween_tween_step(object, key, elapsed, value):
-	$ProgressBar.update()
+	$Speedometer/ProgressBar.update()
