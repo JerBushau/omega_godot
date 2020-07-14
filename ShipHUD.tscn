@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/shield_button.png" type="Texture" id=3]
 [ext_resource path="res://Assets/drone_button.png" type="Texture" id=4]
-[ext_resource path="res://Assets/RegenTest.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.356863, 0.486275, 1, 1 )
@@ -86,11 +85,16 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 [sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.960784, 0.521569, 0.266667, 1 )
+[sub_resource type="StyleBoxFlat" id=14]
 
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.121569, 0.121569, 0.121569, 1 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.788235, 1, 1, 0.509804 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="HUD" type="CanvasLayer"]
 layer = 0
@@ -212,7 +216,7 @@ margin_top = 544.0
 margin_right = 1208.0
 margin_bottom = 552.0
 rect_min_size = Vector2( 0, 8 )
-custom_styles/fg = SubResource( 10 )
+custom_styles/fg = SubResource( 14 )
 custom_styles/bg = SubResource( 11 )
 step = 0.0
 percent_visible = false
@@ -223,7 +227,6 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="Speedometer"]
 
 [node name="RegenStatus" type="Control" parent="."]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
@@ -231,15 +234,26 @@ __meta__ = {
 }
 
 [node name="TextureProgress" type="TextureProgress" parent="RegenStatus"]
-visible = false
-margin_left = 552.0
-margin_top = 472.0
-margin_right = 660.0
-margin_bottom = 572.0
+margin_left = 1072.0
+margin_top = 432.0
+margin_right = 1180.0
+margin_bottom = 532.0
 max_value = 5.0
 step = 0.01
-texture_progress = ExtResource( 5 )
 fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="RegenStatus"]
+margin_left = 992.0
+margin_top = 584.0
+margin_right = 1208.0
+margin_bottom = 592.0
+rect_min_size = Vector2( 0, 8 )
+custom_styles/fg = SubResource( 12 )
+custom_styles/bg = SubResource( 13 )
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }

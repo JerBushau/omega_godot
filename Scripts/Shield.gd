@@ -4,6 +4,7 @@ const SHADER = preload("res://Shaders/Outline.shader")
 
 onready var ship = get_parent()
 onready var ship_sprite = $"../Sprite"
+onready var ht = ship.get_node("HitTimer")
 var is_active = false
 var on_cooldown = false
 var pm = ParticleManager
@@ -20,6 +21,8 @@ func _ready():
 func activate():
 	if is_active:
 		return
+
+	ht.paused = true
 
 	var mat = ShaderMaterial.new()
 	mat.shader = SHADER
@@ -49,6 +52,7 @@ func activate():
 func deactivate():
 	ship_sprite.set_material(null)
 	is_active = false
+	ht.paused = false
 	$ShieldTimer.stop()
 	$CollisionShape2D.disabled = true
 	$Tween.interpolate_property(self, "scale",

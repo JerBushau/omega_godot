@@ -102,15 +102,15 @@ func die():
 func take_damage(dmg: int, collision=null):
 	.take_damage(dmg)
 	
-	$HitTimer.start()
-	
-	if $Shield.is_active:
-		return
+	if $Shield.is_active and $HitTimer.time_left == 0 and $HpRegenTimer.time_left == 0:
+		$HitTimer.start()
 
 	if not collision:
 		return
 	
+	$HitTimer.start()
 	deactivate_regen()
+	
 	#change signal name to camera shake or something
 	Signals.emit_signal("ship_damage_taken")
 	pm.create_particle_of_type(Particle_Types.SHIP_DMG, collision)
