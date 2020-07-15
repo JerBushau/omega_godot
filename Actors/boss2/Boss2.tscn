@@ -112,7 +112,7 @@ tracks/1/keys = {
 "values": [ PoolVector2Array( -56, -16, -56, 32, -48, 48, -32, 64, -24, 64, -32, 48, -32, 40, -32, 32, -16, 40, 8, 40, 40, 24, 32, 48, 24, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -40, 64, -32, 40, -32, 40, -32, 32, -16, 40, 8, 40, 32, 32, 32, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -64, 56, -72, 64, -56, 56, -40, 40, -32, 32, -16, 40, 8, 40, 40, 24, 48, 48, 72, 72, 64, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -40, 64, -32, 40, -32, 40, -32, 32, -16, 40, 8, 40, 32, 32, 32, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "attack"
 step = 0.01
 tracks/0/type = "value"
@@ -128,7 +128,7 @@ tracks/0/keys = {
 "values": [ 22, 23, 24, 25, 26, 27, 28, 29, 30 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.5
 step = 0.01
 tracks/0/type = "value"
@@ -144,7 +144,7 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11, 12, 13, 14 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -194,7 +194,7 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.462745, 0.462745, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -221,10 +221,11 @@ tracks/1/keys = {
 "values": [ PoolVector2Array( -56, -16, -56, 32, -48, 48, -32, 64, -24, 64, -32, 48, -32, 40, -32, 32, -16, 40, 8, 40, 40, 24, 32, 48, 24, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -40, 64, -32, 40, -32, 40, -32, 32, -16, 40, 8, 40, 32, 32, 32, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -64, 56, -72, 64, -56, 56, -40, 40, -32, 32, -16, 40, 8, 40, 40, 24, 48, 48, 72, 72, 64, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ), PoolVector2Array( -56, -16, -56, 32, -40, 64, -32, 40, -32, 40, -32, 32, -16, 40, 8, 40, 32, 32, 32, 64, 40, 56, 56, 32, 56, -24, 40, -56, 16, -64, -16, -64, -40, -56 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=9]
 radius = 32.0
 
 [node name="Boss2" type="KinematicBody2D"]
+z_index = 6
 collision_layer = 2
 collision_mask = 4
 script = ExtResource( 2 )
@@ -236,10 +237,10 @@ anims/growl = SubResource( 3 )
 anims/idle = SubResource( 4 )
 
 [node name="GrowlPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 6 )
-anims/eat = SubResource( 7 )
-anims/growl = SubResource( 8 )
-anims/idle = SubResource( 9 )
+anims/attack = SubResource( 5 )
+anims/eat = SubResource( 6 )
+anims/growl = SubResource( 7 )
+anims/idle = SubResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
@@ -254,7 +255,7 @@ collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 0, 24 )
-shape = SubResource( 5 )
+shape = SubResource( 9 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false

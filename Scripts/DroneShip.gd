@@ -99,7 +99,7 @@ func explode():
 	for i in bodies:
 		if i.has_method("take_damage") and not "Drone" in i.name:
 			i.take_damage(5, false, {"pos": position, "angle": rotation})
-	
+	ParticleManager.create_particle_of_type(ParticleTypes.DRONE_EXPLOSION, {"pos": position, "angle": rotation})
 	take_damage(hp)
 	
 

@@ -6,6 +6,7 @@ const hedgelord_dmg = preload("res://Objects/HedgeHogSpineParticle.tscn")
 const boss2_explosion = preload("res://Objects/Boss2Explosion.tscn")
 const boss2_dmg = preload("res://Objects/Boss2DmgParticles.tscn")
 const spitter_spit = preload("res://Objects/SpitterProjectileParticles.tscn")
+const drone_explosion = preload("res://Objects/DroneExplosionParticles.tscn")
 
 
 const particles = {
@@ -14,7 +15,8 @@ const particles = {
 	Particle_Types.HEDGELORD_DMG: hedgelord_dmg,
 	Particle_Types.BOSS2_DEATH: boss2_explosion,
 	Particle_Types.BOSS2_DMG: boss2_dmg,
-	Particle_Types.SPITTER_SPIT: spitter_spit
+	Particle_Types.SPITTER_SPIT: spitter_spit,
+	Particle_Types.DRONE_EXPLOSION: drone_explosion
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -24,6 +26,7 @@ func _ready():
 func create_particle_of_type(type, collision=null):
 	var p = particles[type].instance()
 	p.rotation = collision.angle
+	p.z_index = 10
 	p.set_emitting(true)
 	p.position = collision.pos
 	p.set_as_toplevel(true)

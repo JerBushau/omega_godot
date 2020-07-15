@@ -19,12 +19,15 @@ func _ready():
 	$AttackTimer.start()
 
 
-func bounce_in():
+func bounce_in(): 
 	var original_scale = Vector2(1,1)
-	$Tween.interpolate_property(self, "scale", Vector2(0,0), original_scale*1.3, 0.15)
+	$Tween.interpolate_property(self, "scale", Vector2(0,0), original_scale*1.3, 0.1)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
-	$Tween.interpolate_property(self, "scale", scale, original_scale/1.3, 0.1)
+	$Tween.interpolate_property(self, "scale", scale, original_scale/1.2, 0.1)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$Tween.interpolate_property(self, "scale", scale, original_scale*1.1, 0.1)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$Tween.interpolate_property(self, "scale", scale, original_scale, 0.1)
