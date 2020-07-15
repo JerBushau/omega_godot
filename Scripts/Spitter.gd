@@ -21,10 +21,10 @@ func _ready():
 
 func bounce_in():
 	var original_scale = Vector2(1,1)
-	$Tween.interpolate_property(self, "scale", Vector2(0,0), original_scale*1.2, 0.15)
+	$Tween.interpolate_property(self, "scale", Vector2(0,0), original_scale*1.3, 0.15)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
-	$Tween.interpolate_property(self, "scale", scale, original_scale/1.2, 0.1)
+	$Tween.interpolate_property(self, "scale", scale, original_scale/1.3, 0.1)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$Tween.interpolate_property(self, "scale", scale, original_scale, 0.1)
@@ -62,7 +62,7 @@ func take_damage(dmg, is_crit=false, collision=null):
 func setup(pos):
 	position = pos
 	var should_invert = randf() > 0.50
-	var initial_horizontal_velocity =  rand_range(175, 275)
+	var initial_horizontal_velocity =  rand_range(175, 200)
 	if should_invert:
 		initial_horizontal_velocity *= -1 
 	print(should_invert)

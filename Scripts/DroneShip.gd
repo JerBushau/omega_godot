@@ -1,13 +1,14 @@
 extends KinematicBody2D
 
 var pm = ParticleManager
-var speed = 8
+var speed = 7
 var velocity = Vector2.UP
 var steer_force = 300
 var acceleration = Vector2.ZERO
 var current_target
 var dmg = 1
 var hp = 75
+var is_dead
 var collision_pos
 var collision_angle
 var collision_velocity_at_angle
@@ -35,11 +36,13 @@ func _process(delta):
 	if not current_target:
 		find_target()
 		
-	if hp <= 0:
+	if hp <= 0 and not is_dead:
+		is_dead = true
+		explode()
 		queue_free()
 
 
-func take_damage(dmg, collision=null):
+func take_damage(dmg, is_crit=false, collision=null):
 	hp -= dmg
 	pm.create_particle_of_type(Particle_Types.SHIP_DMG, { "vel": velocity.angle(), "pos": global_position, "angle": -global_rotation })
 
@@ -72,6 +75,7 @@ func _physics_process(delta):
 
 func _on_AttackRadius_body_entered(_body):
 	$AttackTimer.start()
+	speed = 5.5
 	pass # Replace with function body.
 
 
@@ -87,3 +91,18 @@ func _on_AttackTimer_timeout():
 		var collision_obj = { "vel": velocity.angle(), "pos": position, "angle": rotation }
 		current_target.take_damage(dmg, false, collision_obj)
 	pass # Replace with function body.
+
+
+func explode():
+	var bodies = $ExplosionRadius.get_overlapping_bodies()
+	
+	for i in bodies:
+		if i.has_method("take_damage") and not "Drone" in i.name:
+			i.take_damage(5, false, {"pos": position, "angle": rotation})
+	
+	take_damage(hp)
+	
+
+
+func _on_LifeTimer_timeout():
+	explode()

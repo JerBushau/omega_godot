@@ -34,6 +34,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "open"
+length = 0.2
+step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -41,7 +43,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 2, 3, 4 ]
@@ -115,6 +117,7 @@ scale = Vector2( 1.2, 1.2 )
 texture = ExtResource( 1 )
 vframes = 3
 hframes = 3
+frame = 1
 
 [node name="ShipDeathSprite" type="Sprite" parent="."]
 visible = false
@@ -259,7 +262,7 @@ script = ExtResource( 15 )
 wait_time = 0.2
 
 [node name="Cooldown" type="Timer" parent="Drones"]
-wait_time = 10.0
+wait_time = 0.5
 one_shot = true
 [connection signal="timeout" from="ShipCamera/Reset_cam_timer" to="ShipCamera" method="_on_Reset_cam_timer_timeout"]
 [connection signal="timeout" from="Weapon/Muzzle/ShotTimer" to="." method="_on_ShotTimer_timeout"]

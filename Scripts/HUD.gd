@@ -19,14 +19,17 @@ func init(parent):
 	$HpBar.max_value = _parent.max_hp
 	$HpBar.value = _parent.hp
 	$Speedometer/ProgressBar.max_value = _parent.speed
-	$DroneAbility/ProgressBar.max_value = _parent.get_node("Drones/Cooldown").wait_time
+	$DroneAbility/ProgressBar.max_value = 5
 	$RegenStatus/ProgressBar.max_value = _parent.get_node("HitTimer").wait_time
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	$DroneAbility/ProgressBar.value = _parent.get_node("Drones/Cooldown").time_left
+	var timers = _parent.get_node("Drones").timers
+	if timers.size() > 0:
+		$DroneAbility/ProgressBar.value = _parent.get_node("Drones").timers[timers.size() - 1].time_left
 	$Speedometer/ProgressBar.value = _parent.velocity.length()
 	$RegenStatus/ProgressBar.value = _parent.get_node("HitTimer").time_left
+	$DroneAbility/Label2.text = str(_parent.get_node("Drones").drone_count)
 
 
 func _physics_process(delta):

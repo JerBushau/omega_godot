@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Assets/fonts/Anton-Regular.ttf" type="DynamicFontData" id=2]
@@ -82,10 +82,14 @@ bg_color = Color( 0.639216, 0.980392, 1, 0.341176 )
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
+[sub_resource type="DynamicFont" id=14]
+size = 32
+font_data = ExtResource( 2 )
+
 [sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=10]
 
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.121569, 0.121569, 0.121569, 1 )
@@ -191,6 +195,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label2" type="Label" parent="DroneAbility"]
+margin_left = 48.0
+margin_right = 80.0
+margin_bottom = 32.0
+custom_fonts/font = SubResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Speedometer" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -216,7 +229,7 @@ margin_top = 544.0
 margin_right = 1208.0
 margin_bottom = 552.0
 rect_min_size = Vector2( 0, 8 )
-custom_styles/fg = SubResource( 14 )
+custom_styles/fg = SubResource( 10 )
 custom_styles/bg = SubResource( 11 )
 step = 0.0
 percent_visible = false
